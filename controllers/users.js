@@ -9,16 +9,17 @@ var permissions = require('../middleware/permissions.js');
 
 
 // ------------------- GET routes -------------------
-
 // GET index page
 router.get('/', permissions.loggedIn,  function (req, res) {
+  User.findById(req.session.currentUserId, function (err, foundUser) {
     res.render('users/index.ejs', {
-      currentUser: req.session.currentUser
+      user: foundUser
     });
+  });
 });
 
 // GET sign-up page
-router.get('/new', function (req, res) {
+router.get('/new', permissions.unknownUser, function (req, res) {
     res.render('users/new.ejs');
 });
 
@@ -40,22 +41,37 @@ router.get('/:id', permissions.loggedIn, function (req, res) {
   });
 });
 
-// ------------------- POST routes -------------------
-
+// ------------------- POST route -------------------
+// create new user
 router.post('/', permissions.unknownUser, function (req, res) {
   console.log(req.body);
   req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
   User.create(req.body, function(err, createdUser) {
     console.log(err);
     console.log(createdUser);
-    res.redirect('/');
+    res.redirect('/sessions/new');
   });
 });
 
-// ------------------- PUT routes -------------------
-router.put('/:id', function (req, res) {
+// ------------------- PUT route -------------------
+// update user information
+router.put('/:id', permissions.loggedIn, function (req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedUser) {
+    console.log(err);
+    console.log(updatedUser);
     res.redirect('/users/' + req.params.id);
+  });
+});
+
+
+// ------------------- DELETE route -------------------
+// delete user as well as user's topics and flash cards
+router.delete('/:id', permissions.loggedIn, function (req, res) {
+  User.findByIdAndRemove(req.params.id, function (err, deletedUser) {
+    console.log(err);
+    console.log(deletedUser);
+    //FILL WITH LOGIC FOR DELETING TOPICS AND FLASH CARDS
+    res.redirect('/users/new');
   });
 });
 

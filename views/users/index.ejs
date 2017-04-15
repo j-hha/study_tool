@@ -10,11 +10,11 @@
     </header>
     <main>
       <aside>
-        <p>Well helloooooo, <%=currentUser.username%>!</p>
+        <p>Well helloooooo, <%=user.username%>!</p>
         <form action="/sessions?_method=DELETE" method="POST">
           <input type="submit" value="log out">
         </form>
-        <a href="users/<%=currentUser._id%>">my profile</a>
+        <a href="users/<%=user.id%>">my profile</a>
       </aside>
     </main>
     <footer>

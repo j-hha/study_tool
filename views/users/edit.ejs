@@ -15,12 +15,19 @@
         </form>
       </aside>
       <form action="/users/<%=user.id%>/?_method=PUT" method="POST">
-        <legend>Create a new account</legend>
+        <legend>Edit my account</legend>
         <label for="username">username: </label>
         <input type="text" name="username" id="username" value="<%=user.username%>">
         <label for="password">password:</label>
         <input type="password" name="password" id="password" value="<%=user.password%>">
         <input type="submit" value="update">
+      </form>
+      <br />
+      <hr />
+      <br />
+      <form action="/users/<%=user.id%>/?_method=DELETE" method="POST">
+        <legend>Delete my account</legend>
+        <input type="submit" value="DELETE THIS ACCOUNT">
       </form>
     </main>
     <footer>
