@@ -6,11 +6,17 @@ var express = require('express'),
 
 // ------------------- GET routes -------------------
 
-// get sign-up page
-router.get('/new', function(req, res) {
-  res.render('users/new.ejs');
-})
+// GET index page
+router.get('/', function (req, res) {
+  res.render('users/index.ejs', {
+    currentUser: req.session.currentUser
+  });
+});
 
+// GET sign-up page
+router.get('/new', function (req, res) {
+  res.render('users/new.ejs');
+});
 
 // ------------------- POST routes -------------------
 

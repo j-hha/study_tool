@@ -18,11 +18,28 @@ router.get('/new', function(req, res){
 
 
 // ------------------- POST route --> user logs in -------------------
-
+router.post('/', function(req, res) {
+  User.findOne({ username: req.body.username }, function (err, foundUser) {
+    console.log(foundUser);
+    if(bcrypt.compareSync(req.body.password, foundUser.password)) {
+      req.session.currentUser = foundUser;
+      console.log(req.session.currentUser);
+      // JUST FOR TESTING
+      res.redirect('/users');
+    } else {
+      // JUST FOR TESTING
+      res.send('ERROR');
+    }
+  });
+});
 
 
 // ------------------- DELETE route --> user logs out -------------------
-
+router.delete('/', function (req, res) {
+  req.session.destroy(function () {
+    res.redirect('/');
+  });
+});
 
 // ------------------- export controller -------------------
 module.exports = router;

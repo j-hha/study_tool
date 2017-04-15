@@ -14,6 +14,15 @@ var methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 
+// ------------------- set up express-session -------------------
+var session = require('express-session');
+app.use(session({
+  secret: 'just for testing purposes',
+  resave: false,
+  saveUninitialized: false
+}))
+
+
 // ------------------- set up usersController -------------------
 var usersController = require('./controllers/users.js');
 app.use('/users', usersController);
