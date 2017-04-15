@@ -53,7 +53,11 @@ router.post('/', permissions.unknownUser, function (req, res) {
 });
 
 // ------------------- PUT routes -------------------
-
+router.put('/:id', function (req, res) {
+  User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedUser) {
+    res.redirect('/users/' + req.params.id);
+  });
+});
 
 // ------------------- export controller -------------------
 module.exports = router;
