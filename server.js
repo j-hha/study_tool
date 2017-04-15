@@ -8,23 +8,32 @@ var express = require('express'),
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 // ------------------- set up methodOverride -------------------
 var methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
-// ------------------- require local files -------------------
 
+// ------------------- set up usersController -------------------
+var usersController = require('./controllers/users.js');
+app.use('/users', usersController);
+
+
+// ------------------- set up sessionsController -------------------
+var sessionsController = require('./controllers/sessions.js');
+app.use('/sessions', sessionsController);
 
 
 // ------------------- connect to database -------------------
 var mongoose = require('mongoose'),
     db = mongoose.connection;
 
-mongoose.connect('mongodb://localhost:27017/auth');
+mongoose.connect('mongodb://localhost:27017/study_tool');
 
 db.once('open', function() {
   console.log('Server for study_app connected to mongo');
 });
+
 
 // ------------------- routes -------------------
 app.get('/', function (req, res) {
