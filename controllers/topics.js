@@ -13,7 +13,13 @@ var permissions = require('../middleware/permissions.js');
 // ------------------- GET routes -------------------
 //GET topics index page
 router.get('/', function (req, res) {
-  res.render('topics/index.ejs');
+  Topic.find({creator: req.session.currentUserId}, function (err, allTopics) {
+    console.log(allTopics);
+    res.render('topics/index.ejs', {
+      topics: allTopics
+    });
+  }
+  );
 });
 
 //GET topics new page
@@ -45,7 +51,7 @@ router.post('/', function (req, res) {
       console.log(err);
       console.log(createdTopic);
     });
-  res.send('TOPIC CREATE WORKS');
+  res.redirect('/topics');
 });
 
 // REMEMBER FOR POST

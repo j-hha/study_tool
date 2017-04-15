@@ -12,6 +12,11 @@
       <aside>
         <a href="topics/new">add new topic</a>
       </aside>
+      <ul>
+        <% for (var i = 0; i < topics.length; i++) { %>
+          <li><%= topics[i]; %></li>
+        <% } %>
+      </ul>
     </main>
     <footer>
     </footer>
