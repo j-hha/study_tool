@@ -6,10 +6,14 @@
   </head>
   <body>
     <header>
-
     </header>
     <main>
       <p>Well helloooooo, <%=currentUser.username%>!</p>
+      <aside>
+        <form action="/sessions?_method=DELETE" method="POST">
+          <input type="submit" value="log out">
+        </form>
+      </aside>
     </main>
     <footer>
 
