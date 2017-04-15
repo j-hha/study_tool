@@ -71,7 +71,9 @@ router.delete('/:id', permissions.loggedIn, function (req, res) {
     console.log(err);
     console.log(deletedUser);
     //FILL WITH LOGIC FOR DELETING TOPICS AND FLASH CARDS
-    res.redirect('/users/new');
+    req.session.destroy(function () {
+      res.redirect('/');
+    });
   });
 });
 
