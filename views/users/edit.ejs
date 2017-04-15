@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+    </header>
+    <main>
+      <aside>
+        <form action="/sessions?_method=DELETE" method="POST">
+          <input type="submit" value="log out">
+        </form>
+      </aside>
+      <form action="/users?_method=PUT" method="POST">
+        <legend>Create a new account</legend>
+        <label for="username">username: </label>
+        <input type="text" name="username" id="username" value="<%=user.username%>">
+        <label for="password">password:</label>
+        <input type="password" name="password" id="password" value="<%=user.password%>">
+        <input type="submit" value="update">
+      </form>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

@@ -22,6 +22,15 @@ router.get('/new', function (req, res) {
     res.render('users/new.ejs');
 });
 
+// GET edit page
+router.get('/:id/edit', permissions.loggedIn, function (req, res) {
+  User.findById(req.params.id, function(err, foundUser) {
+    res.render('users/edit.ejs', {
+      user: foundUser
+    });
+  });
+});
+
 // ------------------- POST routes -------------------
 
 router.post('/', permissions.unknownUser, function (req, res) {
@@ -33,6 +42,9 @@ router.post('/', permissions.unknownUser, function (req, res) {
     res.redirect('/');
   });
 });
+
+// ------------------- PUT routes -------------------
+
 
 // ------------------- export controller -------------------
 module.exports = router;
