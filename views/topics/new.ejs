@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <main>
+      <form action="/topics" method="POST">
+        <legend>Create a new Topic</legend>
+        <label for="title">title:</label>
+        <input type="text" name="title">
+        <label for="description">description:</label>
+        <textarea name="description"></textarea>
+        <input type="submit" value="add">
+      </form>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

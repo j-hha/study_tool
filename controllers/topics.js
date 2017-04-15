@@ -13,12 +13,12 @@ var permissions = require('../middleware/permissions.js');
 // ------------------- GET routes -------------------
 //GET topics index page
 router.get('/', function (req, res) {
-  res.send('TOPICS ROUTE WORKS');
+  res.render('topics/index.ejs');
 });
 
 //GET topics new page
 router.get('/new', function (req, res) {
-  res.send('TOPICS NEW ROUTE WORKS');
+  res.render('topics/new.ejs');
 });
 
 
@@ -31,6 +31,26 @@ router.get('/:id/edit', function (req, res) {
 router.get('/:id', function (req, res) {
   res.send('TOPICS SHOW ROUTE WORKS');
 });
+
+// ------------------- POST routes -------------------
+//POST create new topic
+router.post('/', function (req, res) {
+    Topic.create(
+    {
+      title: req.body.title,
+      description: req.body.description,
+      creator: req.session.currentUserId
+    },
+    function(err, createdTopic) {
+      console.log(err);
+      console.log(createdTopic);
+    });
+  res.send('TOPIC CREATE WORKS');
+});
+
+// REMEMBER FOR POST
+  // title: req.body.title
+  // creator: req.sessions.currentUserId
 
 // ------------------- export controller -------------------
 module.exports = router;
