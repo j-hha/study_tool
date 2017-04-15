@@ -32,6 +32,10 @@ app.use('/users', usersController);
 var topicsController = require('./controllers/topics.js');
 app.use('/topics', topicsController);
 
+// ------------------- set up dataController -------------------
+var dataController = require('./controllers/data.js');
+app.use('/data', dataController);
+
 
 // ------------------- set up sessionsController -------------------
 var sessionsController = require('./controllers/sessions.js');
@@ -55,7 +59,6 @@ var permissions = require('./middleware/permissions.js');
 // ------------------- routes -------------------
 
 // GET landing page
-
 app.get('/', permissions.unknownUser, function (req, res) {
   res.render('index.ejs');
 });

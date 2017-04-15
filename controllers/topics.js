@@ -2,7 +2,8 @@
 var express = require('express'),
     router = express.Router(),
     User = require('../models/users.js'),
-    Topic = require('../models/topics.js');
+    Topic = require('../models/topics.js'),
+    Data = require('../models/data.js');
 
 
 // ------------------- permissions middleware set up -------------------
@@ -16,7 +17,6 @@ router.get('/', function (req, res) {
 });
 
 //GET topics new page
-//GET topics edit page
 router.get('/new', function (req, res) {
   res.send('TOPICS NEW ROUTE WORKS');
 });
