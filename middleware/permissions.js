@@ -4,7 +4,7 @@ var permissions = {
     if (req.session.currentUser !== undefined) {
       return next();
     } else {
-      return res.send('Nope!');
+      return res.redirect('/');
     }
   },
   // Allows unknown users to access landing page, sign in and sign up pages, users who have already signed in are sent back to the users index page if they try to access these sites
@@ -12,7 +12,7 @@ var permissions = {
     if (req.session.currentUser === undefined) {
       return next();
     } else {
-      return res.send('Nope!');
+      return res.redirect('/users');
     }
   }
 };

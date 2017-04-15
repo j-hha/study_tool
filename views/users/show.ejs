@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <main>
+      <aside>
+        <p>Well helloooooo, <%=user.username%>!</p>
+        <form action="/sessions?_method=DELETE" method="POST">
+          <input type="submit" value="log out">
+        </form>
+        <a href="<%=user._id%>/edit">profile settings</a>
+      </aside>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

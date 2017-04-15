@@ -31,6 +31,15 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   });
 });
 
+// GET show page
+router.get('/:id', permissions.loggedIn, function (req, res) {
+  User.findById(req.params.id, function(err, foundUser) {
+    res.render('users/show.ejs', {
+      user: foundUser
+    });
+  });
+});
+
 // ------------------- POST routes -------------------
 
 router.post('/', permissions.unknownUser, function (req, res) {
