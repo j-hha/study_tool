@@ -2,6 +2,7 @@
 var express = require('express'),
     router = express.Router(),
     User = require('../models/users.js'),
+    Topic = require('../models/topics.js'),
     bcrypt = require('bcrypt');
 
 // ------------------- permissions middleware set up -------------------

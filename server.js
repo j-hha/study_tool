@@ -28,6 +28,11 @@ var usersController = require('./controllers/users.js');
 app.use('/users', usersController);
 
 
+// ------------------- set up topicsController -------------------
+var topicsController = require('./controllers/topics.js');
+app.use('/topics', topicsController);
+
+
 // ------------------- set up sessionsController -------------------
 var sessionsController = require('./controllers/sessions.js');
 app.use('/sessions', sessionsController);
