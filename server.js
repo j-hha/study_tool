@@ -43,9 +43,15 @@ db.once('open', function() {
   console.log('Server for study_app connected to mongo');
 });
 
+// ------------------- permissions middleware set up -------------------
+var permissions = require('./middleware/permissions.js');
+
 
 // ------------------- routes -------------------
-app.get('/', function (req, res) {
+
+// GET landing page
+
+app.get('/', permissions.unknownUser, function (req, res) {
   res.render('index.ejs');
 });
 
