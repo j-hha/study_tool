@@ -15,7 +15,13 @@
           <input type="submit" value="log out">
         </form>
         <a href="<%=user._id%>/edit">profile settings</a>
+        <a href="topics/new">add new topic</a>
       </aside>
+      <ul>
+        <% for (var i = 0; i < topics.length; i++) { %>
+          <li><%= topics[i]; %></li>
+        <% } %>
+      </ul>
     </main>
     <footer>
     </footer>

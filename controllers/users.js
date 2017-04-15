@@ -15,7 +15,7 @@ var permissions = require('../middleware/permissions.js');
 router.get('/', permissions.loggedIn,  function (req, res) {
   User.findById(req.session.currentUserId, function (err, foundUser) {
     res.render('users/index.ejs', {
-      user: foundUser
+      user: foundUser,
     });
   });
 });
@@ -37,8 +37,11 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
 // GET show page
 router.get('/:id', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    res.render('users/show.ejs', {
-      user: foundUser
+    Topic.find({creator: foundUser.id}, function (err, foundTopics) {
+      res.render('users/show.ejs', {
+        user: foundUser,
+        topics: foundTopics
+      });
     });
   });
 });

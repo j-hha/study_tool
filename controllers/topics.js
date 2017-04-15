@@ -13,7 +13,7 @@ var permissions = require('../middleware/permissions.js');
 // ------------------- GET routes -------------------
 //GET topics index page
 router.get('/', function (req, res) {
-  Topic.find({creator: req.session.currentUserId}, function (err, allTopics) {
+  Topic.find({}, function (err, allTopics) {
     console.log(allTopics);
     res.render('topics/index.ejs', {
       topics: allTopics
