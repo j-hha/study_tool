@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <main>
+      <form action="/topics/<%= topic.id %>/?_method=PUT" method="POST">
+        <legend>Edit topic</legend>
+        <label for="title">title:</label>
+        <input type="text" name="title" value="<%= topic.title %>">
+        <label for="description">description:</label>
+        <textarea name="description"><%= topic.description %></textarea>
+        <input type="submit" value="update">
+      </form>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

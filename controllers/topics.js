@@ -18,8 +18,7 @@ router.get('/', function (req, res) {
     res.render('topics/index.ejs', {
       topics: allTopics
     });
-  }
-  );
+  });
 });
 
 //GET topics new page
@@ -30,15 +29,21 @@ router.get('/new', function (req, res) {
 
 //GET topics edit page
 router.get('/:id/edit', function (req, res) {
-  res.send('TOPICS EDIT ROUTE WORKS');
+  Topic.findById(req.params.id, function (err, foundTopic) {
+    res.render('topics/edit.ejs', {
+      topic: foundTopic
+    });
+  });
 });
+
 
 //GET topics show page
 router.get('/:id', function (req, res) {
   res.send('TOPICS SHOW ROUTE WORKS');
 });
 
-// ------------------- POST routes -------------------
+
+// ------------------- POST route -------------------
 //POST create new topic
 router.post('/', function (req, res) {
     Topic.create(
@@ -54,9 +59,14 @@ router.post('/', function (req, res) {
   res.redirect('/topics');
 });
 
-// REMEMBER FOR POST
-  // title: req.body.title
-  // creator: req.sessions.currentUserId
+// ------------------- PUT route -------------------
+router.put('/:id', function (req, res) {
+  Topic.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedTopic) {
+    console.log(err);
+    console.log(updatedTopic);
+    res.redirect('/topics/' + req.params.id);
+  });
+});
 
 // ------------------- export controller -------------------
 module.exports = router;
