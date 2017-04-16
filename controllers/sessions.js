@@ -16,17 +16,26 @@ router.get('/new', function(req, res){
   res.render('sessions/new.ejs');
 });
 
+router.get('/new/fail', function(req, res){
+  res.render('status.ejs', {
+    success: false,
+    origin: 'log in user',
+  });
+});
 
 // ------------------- POST route --> user logs in -------------------
 router.post('/', function(req, res) {
   User.findOne({ username: req.body.username }, function (err, foundUser) {
-    if(bcrypt.compareSync(req.body.password, foundUser.password)) {
-      req.session.currentUserId = foundUser.id;
-      // JUST FOR TESTING
-      res.redirect('/topics');
+    console.log(foundUser);
+    if (foundUser !== null && !err) {
+      if(bcrypt.compareSync(req.body.password, foundUser.password)) {
+        req.session.currentUserId = foundUser.id;
+        res.redirect('/topics');
+      } else {
+        res.redirect('/sessions/new/fail');
+      }
     } else {
-      // JUST FOR TESTING
-      res.send('ERROR');
+      res.redirect('/sessions/new/fail');
     }
   });
 });

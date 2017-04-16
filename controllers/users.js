@@ -45,7 +45,7 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   });
 });
 
-// GET create success page
+// GET  edit success page
 router.get('/:id/edit/success',  function (req, res) {
   res.render('status.ejs', {
     success: true,
@@ -53,12 +53,34 @@ router.get('/:id/edit/success',  function (req, res) {
   })
 });
 
-// GET create success page
+// GET edit fail page
 router.get('/:id/edit/fail',  function (req, res) {
+  User.findById(req.params.id, function(err, foundUser) {
+    res.render('status.ejs', {
+      success: false,
+      origin: 'update user',
+      user: foundUser
+    });
+  });
+});
+
+// GET edit password success page
+router.get('/:id/edit/password/success',  function (req, res) {
   res.render('status.ejs', {
-    success: false,
-    origin: 'update user'
+    success: true,
+    origin: 'update password'
   })
+});
+
+// GET edit password fail page
+router.get('/:id/edit/password/fail',  function (req, res) {
+  User.findById(req.params.id, function(err, foundUser) {
+    res.render('status.ejs', {
+      success: false,
+      origin: 'update password',
+      user: foundUser
+    });
+  });
 });
 
 // ------------------- POST route -------------------
@@ -66,7 +88,7 @@ router.get('/:id/edit/fail',  function (req, res) {
 router.post('/', permissions.unknownUser, function (req, res) {
   console.log(req.body);
   // Please note: validating here that the user did not leave the password field empty (rather than relying on the schema validation) is vital! If an empty string gets passed to bcrypt, the result will be a string with a length > 0. An empty string as the password will therefore pass the Schema validation
-    if (req.body.password.trim() !== "" && req.body.password === req.body.passwordConfirm) {
+    if (req.body.password.length >= 8 && req.body.password === req.body.passwordConfirm) {
       req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
       User.create(req.body, function(err, createdUser) {
         if (err) {
@@ -83,7 +105,7 @@ router.post('/', permissions.unknownUser, function (req, res) {
 // ------------------- PUT route -------------------
 // update user information
 router.put('/:id', permissions.loggedIn, function (req, res) {
-  User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedUser) {
+  User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }, function (err, updatedUser) {
     if (err) {
       res.redirect('/users/' + req.params.id + '/edit/fail');
     } else {
@@ -94,18 +116,18 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
 
 // update password
 router.put('/:id/password', permissions.loggedIn, function (req, res) {
-  if (req.body.password.trim() !== "" && req.body.password === req.body.passwordConfirm) {
+  if (req.body.password.length >= 8 && req.body.password === req.body.passwordConfirm) {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     User.findByIdAndUpdate(req.params.id,
       {
         password: req.body.password
-      }, {new: true}, function (err, updatedUser) {
+      }, { runValidators: true }, function (err, updatedUser) {
         console.log(err);
         console.log(updatedUser);
-      res.redirect('/topics');
+      res.redirect('/users/' + req.params.id + '/edit/password/success');
     });
   } else {
-      res.send('UPDATE FAILED');
+    res.redirect('/users/' + req.params.id + '/edit/password/fail');
   }
 });
 

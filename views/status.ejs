@@ -6,14 +6,44 @@
   </head>
   <body>
     <main>
+      <!-- Messages: New user profile created -->
       <% if (success === true && origin === 'new user') {%>
         <p>Your profile was successfully created.</p>
-        <p><a href="/sessions/new">continue to log in</a>  </p>
+        <p>Continue to <a href="/sessions/new">log in</a>.</p>
       <% } else if (success === false && origin === 'new user'){ %>
         <p>Sorry, something went wrong.</p>
-        <p><a href="/users/new">Please try again</a></p>
+        <p>Please note:</p>
+        <ul>
+          <li>The username has to be at least three characters long</li>
+          <li>The password has to be at least eight characters long</li>
+        </ul>
+        <p>Please <a href="/users/new">try again</a>.</p>
+        <!-- Messages: failed log in -->
+      <% } else if (success === false && origin === 'log in user') { %>
+        <p>Sorry, something went wrong. The username or password you provided seem to be incorrect.</p>
+        <p>Please <a href="/sessions/new">try again</a>.</p>
+        <!-- Messages: user profile updated -->
+      <% } else if (success === true && origin === 'update user') {%>
+        <p>Your username was successfully updated.</p>
+        <p>Continue to your <a href="/topics">dashboard</a>.</p>
+      <% } else if (success === false && origin === 'update user') {%>
+        <p>Sorry, something went wrong. Your username was not updated.</p>
+        <p>Please note:</p>
+        <ul>
+          <li>The username has to be at least three characters long</li>
+        </ul>
+        <p>Please <a href="/users/<%= user._id; %>/edit">try again</a>.</p>
+      <% } else if (success === true && origin === 'update password') { %>
+        <p>Your password was successfully updated.</p>
+        <p>Continue to your <a href="/topics">dashboard</a>.</p>
+      <% } else if (success === false && origin === 'update password') { %>
+        <p>Sorry, something went wrong. Your password was not updated.</p>
+        <p>Please note:</p>
+        <ul>
+          <li>The password has to be at least eight characters long</li>
+        </ul>
+        <p>Please <a href="/users/<%= user._id; %>/edit">try again</a>.</p>
       <% } %>
-
     </main>
   </body>
 </html>
