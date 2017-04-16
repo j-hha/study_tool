@@ -44,7 +44,13 @@ router.post('/:topicId', permissions.loggedIn, function (req, res) {
 });
 
 // ------------------- PUT route -------------------
-
+router.put('/:id', permissions.loggedIn, function (req, res) {
+  Data.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedCard) {
+    Topic.findById(updatedCard.topic, function (err, foundTopic) {
+      res.redirect('/topics/' + updatedCard.topic);
+    });
+  });
+});
 
 // ------------------- DELETE route -------------------
 
@@ -52,7 +58,7 @@ router.delete('/:id', permissions.loggedIn, function (req, res) {
   Data.findByIdAndRemove(req.params.id, function (err, deletedCard) {
     //FILL WITH LOGIC FOR DELETING DATA ID FROM USER AND TOPICS
     //redirect to topic show page!
-    res.redirect('/topics' + deletedCard.topic);
+    res.redirect('/topics/' + deletedCard.topic);
   });
 });
 

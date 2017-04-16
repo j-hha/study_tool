@@ -9,16 +9,16 @@
       <% include ../partials/header %>
     </header>
     <main>
-      <form action="/data/<%= data.id %>/?_method=PUT" method="POST">
+      <form action="/data/<%= card.id %>/?_method=PUT" method="POST">
         <legend>Edit flash card</legend>
         <label for="question">question:</label>
-        <textarea name="question"><%= data.question; %></textarea>
+        <textarea name="question"><%= card.question; %></textarea>
         <label for="answer">answer:</label>
-        <textarea name="answer"><%= data.answer; %></textarea>
+        <textarea name="answer"><%= card.answer; %></textarea>
         <input type="submit" value="update">
       </form>
       <hr / >
-      <form action="/data/<%= data.id; %>/?_method=DELETE" method="post">
+      <form action="/data/<%= card.id; %>/?_method=DELETE" method="post">
         <input type="submit" value="DELETE">
       </form>
     </main>
