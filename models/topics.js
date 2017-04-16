@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var topicSchema = mongoose.Schema({
   title: { type: String, required: true },
   description: String,
-  flashcards: { type: [ String ] },
+  flashcards: [Object],
   creator: { type: Object, required: true },
 });
 

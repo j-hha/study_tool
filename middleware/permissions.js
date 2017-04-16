@@ -13,7 +13,7 @@ var permissions = {
         if (foundUser !== undefined) {
           return next();
         } else {
-          return res.redirect('/');
+          return res.redirect('/topics');
         }
       });
     } else {
@@ -25,7 +25,7 @@ var permissions = {
     if (req.session.currentUserId === undefined) {
       return next();
     } else {
-      return res.redirect('/users');
+      return res.redirect('/topics');
     }
   }
 };

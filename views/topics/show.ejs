@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <main>
+      <section>
+        <header>
+          <h3>
+            <%= topic.title; %>
+          </h3>
+          <nav>
+            <a href="/topics/<%= topic._id; %>/edit">edit</a>
+            <a href="/data/new/<%= topic._id; %>">add new flash card</a>
+          </nav>
+          <section><%= topic.description; %></section>
+          <section>
+            <ul>
+              <% for (var i = 0; i < cards.length; i++) { %>
+                <li>
+                  <section>
+                    <h4><%= cards[i].question; %></h4>
+                    <p><%= cards[i].answer; %></p>
+                    <footer>
+                      <a href="/data/<%= cards[i]._id %>/edit">edit card</a>
+                    </footer>
+                  </section>
+                </li>
+              <% } %>
+            </ul>
+          </section>
+        </header>
+      </section>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

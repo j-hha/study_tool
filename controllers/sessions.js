@@ -20,12 +20,10 @@ router.get('/new', function(req, res){
 // ------------------- POST route --> user logs in -------------------
 router.post('/', function(req, res) {
   User.findOne({ username: req.body.username }, function (err, foundUser) {
-    console.log(foundUser);
     if(bcrypt.compareSync(req.body.password, foundUser.password)) {
       req.session.currentUserId = foundUser.id;
-      console.log(req.session.currentUserId);
       // JUST FOR TESTING
-      res.redirect('/users');
+      res.redirect('/topics');
     } else {
       // JUST FOR TESTING
       res.send('ERROR');

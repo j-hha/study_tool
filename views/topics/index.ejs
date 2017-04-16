@@ -10,11 +10,40 @@
     </header>
     <main>
       <aside>
-        <a href="topics/new">add new topic</a>
+        <p>Hi <%= user.username; %>!</p>
+        <a href="/topics/new">add a new topic</a>
+        <a href="/users/<%=user._id%>/edit">edit your profile settings</a>
       </aside>
+      <!-- CURRENT USER'S TOPICS -->
+      <h2>Your topics</h2>
       <ul>
-        <% for (var i = 0; i < topics.length; i++) { %>
-          <li><%= topics[i]; %></li>
+        <% for (var i = 0; i < userTopics.length; i++) { %>
+          <li>
+            <section>
+              <header>
+                <h3>
+                  <a href="/topics/<%= userTopics[i].id; %>"><%= userTopics[i].title; %></a>
+                </h3>
+                <section><%= userTopics[i].description; %></section>
+              </header>
+            </section>
+          </li>
+        <% } %>
+      </ul>
+      <!-- OTHER USERS' TOPICS -->
+      <h2>See what other people are studying</h2>
+      <ul>
+        <% for (var i = 0; i < otherTopics.length; i++) { %>
+          <li>
+            <section>
+              <header>
+                <h3>
+                  <a href="/topics/<%= otherTopics[i].id; %>"><%= otherTopics[i].title; %></a>
+                </h3>
+                <section><%= otherTopics[i].description; %></section>
+              </header>
+            </section>
+          </li>
         <% } %>
       </ul>
     </main>

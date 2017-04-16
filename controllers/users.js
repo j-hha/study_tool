@@ -12,13 +12,13 @@ var permissions = require('../middleware/permissions.js');
 
 // ------------------- GET routes -------------------
 // GET index page
-router.get('/', permissions.loggedIn,  function (req, res) {
-  User.findById(req.session.currentUserId, function (err, foundUser) {
-    res.render('users/index.ejs', {
-      user: foundUser,
-    });
-  });
-});
+// router.get('/', permissions.loggedIn,  function (req, res) {
+//   User.findById(req.session.currentUserId, function (err, foundUser) {
+//     res.render('users/index.ejs', {
+//       user: foundUser,
+//     });
+//   });
+// });
 
 // GET sign-up page
 router.get('/new', permissions.unknownUser, function (req, res) {
@@ -35,16 +35,16 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
 });
 
 // GET show page
-router.get('/:id', permissions.loggedIn, function (req, res) {
-  User.findById(req.params.id, function(err, foundUser) {
-    Topic.find({creator: foundUser.id}, function (err, foundTopics) {
-      res.render('users/show.ejs', {
-        user: foundUser,
-        topics: foundTopics
-      });
-    });
-  });
-});
+// router.get('/:id', permissions.loggedIn, function (req, res) {
+//   User.findById(req.params.id, function(err, foundUser) {
+//     Topic.find({creator: foundUser.id}, function (err, foundTopics) {
+//       res.render('users/show.ejs', {
+//         user: foundUser,
+//         topics: foundTopics
+//       });
+//     });
+//   });
+// });
 
 // ------------------- POST route -------------------
 // create new user
@@ -52,8 +52,6 @@ router.post('/', permissions.unknownUser, function (req, res) {
   console.log(req.body);
   req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
   User.create(req.body, function(err, createdUser) {
-    console.log(err);
-    console.log(createdUser);
     res.redirect('/sessions/new');
   });
 });
@@ -62,9 +60,7 @@ router.post('/', permissions.unknownUser, function (req, res) {
 // update user information
 router.put('/:id', permissions.loggedIn, function (req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedUser) {
-    console.log(err);
-    console.log(updatedUser);
-    res.redirect('/users/' + req.params.id);
+    res.redirect('/topics');
   });
 });
 

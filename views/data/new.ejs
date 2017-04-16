@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <main>
+      <form action="/data/<%= topic._id; %>" method="POST">
+        <legend>Add new flash card</legend>
+        <label for="question">question:</label>
+        <textarea name="question"></textarea>
+        <label for="answer">answer:</label>
+        <textarea name="answer"></textarea>
+        <input type="submit" value="create">
+      </form>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

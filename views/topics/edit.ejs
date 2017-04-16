@@ -17,6 +17,10 @@
         <textarea name="description"><%= topic.description %></textarea>
         <input type="submit" value="update">
       </form>
+      <hr / >
+      <form action="/topics/<%= topic.id; %>/?_method=DELETE" method="post">
+        <input type="submit" value="DELETE">
+      </form>
     </main>
     <footer>
     </footer>
