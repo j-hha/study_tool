@@ -33,6 +33,7 @@
           <li>The username has to be at least three characters long</li>
         </ul>
         <p>Please <a href="/users/<%= user._id; %>/edit">try again</a>.</p>
+        <!-- Messages: user password updated -->
       <% } else if (success === true && origin === 'update password') { %>
         <p>Your password was successfully updated.</p>
         <p>Continue to your <a href="/topics">dashboard</a>.</p>
@@ -42,6 +43,13 @@
         <ul>
           <li>The password has to be at least eight characters long</li>
         </ul>
+        <p>Please <a href="/users/<%= user._id; %>/edit">try again</a>.</p>
+        <!-- Messages: user password updated -->
+      <% } else if (success === true && origin === 'delete profile') { %>
+        <p>Your profile was deleted.</p>
+        <p>Come <a href="/">back</a> any time.</p>
+      <% } else if (success === false && origin === 'delete profile') { %>
+        <p>Sorry, something went wrong.</p>
         <p>Please <a href="/users/<%= user._id; %>/edit">try again</a>.</p>
       <% } %>
     </main>

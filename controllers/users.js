@@ -36,6 +36,25 @@ router.get('/new', permissions.unknownUser, function (req, res) {
     res.render('users/new.ejs');
 });
 
+// GET delete user profile success page
+router.get('/delete/success', function (req, res) {
+  res.render('status.ejs', {
+    success: true,
+    origin: 'delete profile',
+  });
+});
+
+// GET delete user profile fail page
+router.get('/:id/delete/fail', permissions.loggedIn,  function (req, res) {
+  User.findById(req.params.id, function(err, foundUser) {
+    res.render('status.ejs', {
+      success: false,
+      origin: 'delete profile',
+      user: foundUser
+    });
+  });
+});
+
 // GET edit page
 router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
@@ -46,7 +65,7 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
 });
 
 // GET  edit success page
-router.get('/:id/edit/success',  function (req, res) {
+router.get('/:id/edit/success', permissions.loggedIn,  function (req, res) {
   res.render('status.ejs', {
     success: true,
     origin: 'update user'
@@ -54,7 +73,7 @@ router.get('/:id/edit/success',  function (req, res) {
 });
 
 // GET edit fail page
-router.get('/:id/edit/fail',  function (req, res) {
+router.get('/:id/edit/fail', permissions.loggedIn,  function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
     res.render('status.ejs', {
       success: false,
@@ -65,15 +84,15 @@ router.get('/:id/edit/fail',  function (req, res) {
 });
 
 // GET edit password success page
-router.get('/:id/edit/password/success',  function (req, res) {
+router.get('/:id/edit/password/success', permissions.loggedIn, function (req, res) {
   res.render('status.ejs', {
     success: true,
     origin: 'update password'
-  })
+  });
 });
 
 // GET edit password fail page
-router.get('/:id/edit/password/fail',  function (req, res) {
+router.get('/:id/edit/password/fail', permissions.loggedIn,  function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
     res.render('status.ejs', {
       success: false,
@@ -82,6 +101,7 @@ router.get('/:id/edit/password/fail',  function (req, res) {
     });
   });
 });
+
 
 // ------------------- POST route -------------------
 // create new user
@@ -137,10 +157,14 @@ router.delete('/:id', permissions.loggedIn, function (req, res) {
   User.findByIdAndRemove(req.params.id, function (err, deletedUser) {
     console.log(err);
     console.log(deletedUser);
-    //FILL WITH LOGIC FOR DELETING TOPICS AND FLASH CARDS
-    req.session.destroy(function () {
-      res.redirect('/');
-    });
+    if (!err) {
+      //FILL WITH LOGIC FOR DELETING TOPICS AND FLASH CARDS
+      req.session.destroy(function () {
+        res.redirect('/users/delete/success');
+      });
+    } else {
+      res.redirect('/users/' + req.params.id + 'delete/fail');
+    }
   });
 });
 
