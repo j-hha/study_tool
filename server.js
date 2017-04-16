@@ -3,6 +3,10 @@ var express = require('express'),
     app = express(),
     port = 3000;
 
+// ------------------- set up express-static -------------------
+var serve = require('express-static');
+app.use(serve(__dirname + '/public'));
+
 
 // ------------------- set up bodyParser -------------------
 var bodyParser = require('body-parser');
@@ -21,7 +25,6 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
-
 
 // ------------------- set up usersController -------------------
 var usersController = require('./controllers/users.js');

@@ -1,0 +1,116 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+}
+
+header {
+   background-color: rgba(59,73,124,.98);
+   color: #fff;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   box-shadow: 0 .1em .5em #b7b7b7;
+}
+
+header nav a {
+  color: #fff;
+  padding-right: 1em;
+  font-size: 1.2em;
+  text-decoration: none;
+}
+
+header nav a:hover {
+  color: #FFF64D;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: .3em;
+}
+
+
+main {
+  margin-top: 3.4em;
+}
+
+.landing-page {
+  padding: 1em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-flow: row wrap;
+  text-align: center;
+}
+
+.landing-page:first-of-type {
+  background-color: #fff;
+}
+
+.landing-page.about h3 {
+  width: 100%;
+  font-size: 2em;
+  padding: 1.5em 0;
+}
+
+
+.landing-page.about section {
+  width: calc(100%/3);
+  font-size: 1.3em;
+  padding: 1em;
+}
+
+.graphic {
+  width: 50%;
+}
+
+.landing-page:last-of-type {
+  padding: 0;
+}
+
+.landing-page.enter-page a {
+  text-decoration: none;
+  width: 50%;
+  padding: 2em 0;
+  font-size: 2em;
+}
+
+.landing-page.enter-page a:first-of-type {
+  background-color: #6679bf;
+  color: #fff;
+}
+
+.landing-page.enter-page a:nth-of-type(2) {
+  background-color: #e0e4f2;
+  color: #000;
+}
+
+.landing-page.enter-page a:hover {
+  background-color: #fffa99;
+  color: #000;
+}
+
+footer {
+  background-color: #3b497c;
+  color: #fff;
+  text-align: center;
+  padding: 1em 5%;
+}
+
+@media (max-width: 600px){
+  .landing-page.about section {
+    width: 100%;
+  }
+
+  header {
+    font-size: .7em;
+  }
+}

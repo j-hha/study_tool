@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title></title>
+    <% include ./partials/head %>
   </head>
   <body>
     <header>
@@ -17,15 +16,22 @@
       <section class="landing-page">
         <h3>play the game</h3>
       </section>
-      <section class="landing-page">
-        <article>
+      <section class="landing-page about">
           <h3>about this app</h3>
-          <p>create your own flashcards</p>
-          <p>revise</p>
-          <p>and test yourself</p>
-        </article>
+          <section>
+            <img class="graphic" src="/img/flash_card.svg" alt="flash card graphic" />
+            <p>create your own flash cards</p>
+          </section>
+          <section>
+            <img class="graphic" src="/img/light_bulb.svg" alt="light bulb graphic" />
+            <p>learn from others</p>
+          </section>
+          <section>
+            <img class="graphic" src="/img/flash_card.svg" alt="flash card graphic" />
+            <p>and test yourself</p>
+          </section>
       </section>
-      <section class="landing-page">
+      <section class="landing-page enter-page">
         <a href="users/new">sign up</a>
         <a href="sessions/new">log in</a>
       </section class="landing-page">
