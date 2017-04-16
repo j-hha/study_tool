@@ -10,11 +10,18 @@
     </header>
     <main>
       <form action="/users/<%=user.id%>/?_method=PUT" method="POST">
-        <legend>Edit my account</legend>
+        <legend>Change username</legend>
         <label for="username">username: </label>
         <input type="text" name="username" id="username" value="<%=user.username%>">
-        <label for="password">password:</label>
-        <input type="password" name="password" id="password" value="<%=user.password%>">
+        <input type="submit" value="update">
+      </form>
+      <hr />
+      <form action="/users/<%=user.id%>/password/?_method=PUT" method="POST">
+        <legend>Change password</legend>
+        <label for="password">new password:</label>
+        <input type="password" name="password" id="password">
+        <label for="passwordConfirm">please confirm:</label>
+        <input type="password" name="passwordConfirm" id="passwordConfirm">
         <input type="submit" value="update">
       </form>
       <hr />

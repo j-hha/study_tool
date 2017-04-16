@@ -8,8 +8,6 @@ var permissions = {
   loggedIn: function (req, res, next) {
     if (req.session.currentUserId !== undefined) {
       User.findById(req.session.currentUserId, function (err, foundUser) {
-        console.log(err);
-        console.log(foundUser);
         if (foundUser !== undefined) {
           return next();
         } else {

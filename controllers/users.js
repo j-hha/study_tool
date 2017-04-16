@@ -1,24 +1,35 @@
 // ------------------- set up express router -------------------
 var express = require('express'),
     router = express.Router(),
-    User = require('../models/users.js'),
-    Topic = require('../models/topics.js'),
-    Data = require('../models/data.js'),
     bcrypt = require('bcrypt');
+
+
+// ------------------- models -------------------
+var User = require('../models/users.js'),
+    Topic = require('../models/topics.js'),
+    Data = require('../models/data.js');
+
 
 // ------------------- permissions middleware set up -------------------
 var permissions = require('../middleware/permissions.js');
 
 
 // ------------------- GET routes -------------------
-// GET index page
-// router.get('/', permissions.loggedIn,  function (req, res) {
-//   User.findById(req.session.currentUserId, function (err, foundUser) {
-//     res.render('users/index.ejs', {
-//       user: foundUser,
-//     });
-//   });
-// });
+// GET create success page
+router.get('/new/success',  function (req, res) {
+  res.render('status.ejs', {
+    success: true,
+    origin: 'new user'
+  })
+});
+
+// GET create success page
+router.get('/new/fail',  function (req, res) {
+  res.render('status.ejs', {
+    success: false,
+    origin: 'new user'
+  })
+});
 
 // GET sign-up page
 router.get('/new', permissions.unknownUser, function (req, res) {
@@ -50,10 +61,18 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
 // create new user
 router.post('/', permissions.unknownUser, function (req, res) {
   console.log(req.body);
-  req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-  User.create(req.body, function(err, createdUser) {
-    res.redirect('/sessions/new');
-  });
+    if (req.body.password.trim() !== "" && req.body.password === req.body.passwordConfirm) {
+      req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+      User.create(req.body, function(err, createdUser) {
+        if (err) {
+          res.redirect('/users/new/fail');
+        } else {
+          res.redirect('/users/new/success');
+        }
+      });
+    } else {
+      res.redirect('/users/new/fail');
+    }
 });
 
 // ------------------- PUT route -------------------
@@ -64,6 +83,22 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
   });
 });
 
+// update password
+router.put('/:id/password', permissions.loggedIn, function (req, res) {
+  if (req.body.password.trim() !== "" && req.body.password === req.body.passwordConfirm) {
+    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    User.findByIdAndUpdate(req.params.id,
+      {
+        password: req.body.password
+      }, {new: true}, function (err, updatedUser) {
+        console.log(err);
+        console.log(updatedUser);
+      res.redirect('/topics');
+    });
+  } else {
+      res.send('UPDATE FAILED');
+  }
+});
 
 // ------------------- DELETE route -------------------
 // delete user as well as user's topics and flash cards

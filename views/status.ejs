@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <main>
+      <% if (success === true && origin === 'new user') {%>
+        <p>Your profile was successfully created.</p>
+        <p><a href="/sessions/new">continue to log in</a>  </p>
+      <% } else if (success === false && origin === 'new user'){ %>
+        <p>Sorry, something went wrong.</p>
+        <p><a href="/users/new">Please try again</a></p>
+      <% } %>
+
+    </main>
+  </body>
+</html>

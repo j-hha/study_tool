@@ -1,7 +1,9 @@
 // ------------------- set up express router -------------------
 var express = require('express'),
-    router = express.Router(),
-    User = require('../models/users.js'),
+    router = express.Router();
+
+// ------------------- models -------------------
+var User = require('../models/users.js'),
     Topic = require('../models/topics.js'),
     Data = require('../models/data.js');
 
