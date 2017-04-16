@@ -45,22 +45,27 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   });
 });
 
-// GET show page
-// router.get('/:id', permissions.loggedIn, function (req, res) {
-//   User.findById(req.params.id, function(err, foundUser) {
-//     Topic.find({creator: foundUser.id}, function (err, foundTopics) {
-//       res.render('users/show.ejs', {
-//         user: foundUser,
-//         topics: foundTopics
-//       });
-//     });
-//   });
-// });
+// GET create success page
+router.get('/:id/edit/success',  function (req, res) {
+  res.render('status.ejs', {
+    success: true,
+    origin: 'update user'
+  })
+});
+
+// GET create success page
+router.get('/:id/edit/fail',  function (req, res) {
+  res.render('status.ejs', {
+    success: false,
+    origin: 'update user'
+  })
+});
 
 // ------------------- POST route -------------------
 // create new user
 router.post('/', permissions.unknownUser, function (req, res) {
   console.log(req.body);
+  // Please note: validating here that the user did not leave the password field empty (rather than relying on the schema validation) is vital! If an empty string gets passed to bcrypt, the result will be a string with a length > 0. An empty string as the password will therefore pass the Schema validation
     if (req.body.password.trim() !== "" && req.body.password === req.body.passwordConfirm) {
       req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
       User.create(req.body, function(err, createdUser) {
@@ -79,7 +84,11 @@ router.post('/', permissions.unknownUser, function (req, res) {
 // update user information
 router.put('/:id', permissions.loggedIn, function (req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedUser) {
-    res.redirect('/topics');
+    if (err) {
+      res.redirect('/users/' + req.params.id + '/edit/fail');
+    } else {
+      res.redirect('/users/' + req.params.id + '/edit/success');
+    }
   });
 });
 
