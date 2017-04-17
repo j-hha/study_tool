@@ -8,19 +8,16 @@
       <% include ../partials/header %>
     </header>
     <main>
-      <p>Please note:</p>
-      <ul>
-        <li>The username has to be at least three characters long</li>
-        <li>The password has to be at least eight characters long</li>
-      </ul>
       <form class="form" action="/users" method="POST">
         <legend>Create a new account</legend>
         <label for="username">username: </label>
         <input type="text" name="username" id="username">
+        <p>Please note: The username has to be at least three characters long.</p>
         <label for="password">password:</label>
         <input type="password" name="password" id="password">
         <label for="passwordConfirm">please confirm:</label>
         <input type="password" name="passwordConfirm" id="passwordConfirm">
+        <p>Please note: The password has to be at least eight characters long.</p>
         <input type="submit" value="register">
       </form>
     </main>

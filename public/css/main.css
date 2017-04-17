@@ -4,6 +4,10 @@
   margin: 0;
 }
 
+ul {
+  list-style: none;
+}
+
 body {
   font-family: 'Quicksand', sans-serif;
   background-color: #eff1f8;
@@ -21,6 +25,7 @@ header {
    left: 0;
    width: 100%;
    box-shadow: 0 .1em .5em #000;
+   z-index: 1;
 }
 
 header nav a {
@@ -177,7 +182,7 @@ aside nav {
 }
 
 .topics {
-  padding: 1em 0;
+  padding: 1.5em 5%;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -187,6 +192,7 @@ aside nav {
 .topics h2 {
   font-size: 2em;
   width: 100%;
+  padding: 0;
 }
 
 .topics h3 {
@@ -229,15 +235,60 @@ aside nav {
   padding: .2em 0;
   color: #fff;
   text-transform: uppercase;
+  border-top-left-radius: .2em;
+  border-top-right-radius: .2em;
 }
 
 .form label {
   margin: 1.5em 0 .3em 0;
 }
 
-.form input[type="text"] {
-  width: 70%;
+.form input {
   padding: .2em 2%;
+  font-family: 'Quicksand', sans-serif;
+  border-radius: .2em;
+  border: 0;
+  background-color: #eff1f8;
+}
+
+.form textarea {
+  padding: .2em 2%;
+  font-family: 'Quicksand', sans-serif;
+  border-radius: .2em;
+  border: 0;
+  background-color: #eff1f8;
+  max-width: 100%;
+}
+
+.form input[type="submit"] {
+  margin: 1.5em 0 0 0;
+  padding: .5em 5%;
+  width: 30%;
+  background-color: #6679bf;
+  color: #fff;
+  box-shadow: .1em .1em .3em #ccc;
+}
+
+.form input[type="submit"]:hover {
+  background-color: #fffa99;
+  color: #000;
+}
+
+.form p {
+  text-align: justify;
+  font-size: .7em;
+  padding: .5em 0;
+}
+
+.form input.delete-btn {
+  background-color: #ff9999;
+  width: 100%;
+  color: #000;
+}
+
+.form input.delete-btn:hover {
+  background-color: #FF0000;
+  color: #fff;
 }
 
 footer {
@@ -249,6 +300,13 @@ footer {
   position: fixed;
   bottom: 0;
   left: 0;
+  width: 100%;
+}
+
+.user-topics-index {
+  background-color: #eff1f8;
+  padding: 1em 5%;
+  border-radius: .3em;
   width: 100%;
 }
 
@@ -272,6 +330,10 @@ footer {
 
   aside nav {
     width: 100%;
+  }
+
+  .form {
+    width: 90%;
   }
 
 }

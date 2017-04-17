@@ -27,15 +27,11 @@
         <% if (userTopics.length > 0) { %>
           <ul>
             <% for (var i = 0; i < userTopics.length; i++) { %>
-              <li>
-                <section>
-                  <header>
+              <li class="user-topics-index">
                     <h3>
                       <a href="/topics/<%= userTopics[i].id; %>"><%= userTopics[i].title; %></a>
                     </h3>
-                    <section><%= userTopics[i].description; %></section>
-                  </header>
-                </section>
+                    <%= userTopics[i].description; %>
               </li>
             <% } %>
           </ul>
@@ -50,7 +46,7 @@
         <ul>
           <% for (var i = 0; i < otherTopics.length; i++) { %>
             <li>
-              <section>
+              <section class="other-topics-index">
                 <header>
                   <h3>
                     <a href="/topics/<%= otherTopics[i].id; %>"><%= otherTopics[i].title; %></a>

@@ -24,7 +24,8 @@
       </form>
       <form class="form" action="/users/<%=user.id%>/?_method=DELETE" method="POST">
         <legend>Delete my account</legend>
-        <input type="submit" value="DELETE THIS ACCOUNT">
+        <p>Please note: This action will delete <em>your entire account</em>, including all your topics and flash cards. You may come back at any point in time to create a new account. You will not be able to retrieve previously created data, though.</p>
+        <input class="delete-btn" type="submit" value="DELETE">
       </form>
     </main>
     <footer>
