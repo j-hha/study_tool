@@ -5,30 +5,33 @@
   </head>
   <body>
     <header>
-      <h1>study app</h1>
+      <h1>Crammer</h1>
       <nav>
-        <a href="#">play game</a>
         <a href="users/new">sign up</a>
         <a href="sessions/new">log in</a>
       </nav>
     </header>
     <main>
       <section class="landing-page">
+        <h3>Graphic goes here</h3>
         <h3>play the game</h3>
       </section>
       <section class="landing-page about">
-          <h3>about this app</h3>
+          <h3>About Crammer</h3>
           <section>
             <img class="graphic" src="/img/flash_card.svg" alt="flash card graphic" />
-            <p>create your own flash cards</p>
+            <h4>Create flash cards</h4>
+            <p>Start revising your study material right away by breaking it down into small bits that are meaningful to <em>you</em>.</p>
           </section>
           <section>
             <img class="graphic" src="/img/light_bulb.svg" alt="light bulb graphic" />
-            <p>learn from others</p>
+            <h4>Learn from others</h4>
+            <p>Check out other users' study material, compare notes and see how they tackle the learning process.</p>
           </section>
           <section>
-            <img class="graphic" src="/img/flash_card.svg" alt="flash card graphic" />
-            <p>and test yourself</p>
+            <img class="graphic" src="/img/phone.svg" alt="mobile phone" />
+            <h4>Test yourself</h4>
+            <p>Use your flash cards to help you deepen your knowledge. Study anywhere you want - on your phone or at home at your desk.</p>
           </section>
       </section>
       <section class="landing-page enter-page">
@@ -37,7 +40,7 @@
       </section class="landing-page">
     </main>
     <footer>
-      <p>Created by GA WDIR student Hanna Hauck</p>
+      <% include ./partials/footer %>
     </footer>
   </body>
 </html>

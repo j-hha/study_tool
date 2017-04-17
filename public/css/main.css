@@ -6,10 +6,12 @@
 
 body {
   font-family: 'Quicksand', sans-serif;
+  background-color: #eff1f8;
+  padding-bottom: 3em;
 }
 
 header {
-   background-color: rgba(59,73,124,.98);
+   background-color: rgba(0,0,0,.98);
    color: #fff;
    display: flex;
    justify-content: space-between;
@@ -18,7 +20,7 @@ header {
    top: 0;
    left: 0;
    width: 100%;
-   box-shadow: 0 .1em .5em #b7b7b7;
+   box-shadow: 0 .1em .5em #000;
 }
 
 header nav a {
@@ -34,7 +36,7 @@ header nav a:hover {
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  padding: .3em;
+  padding: .3em 3%;
 }
 
 
@@ -52,7 +54,14 @@ main {
 }
 
 .landing-page:first-of-type {
-  background-color: #fff;
+  background-color: #6679bf;
+  color: #fff;
+  min-height: 25em;
+}
+
+.landing-page.about {
+  background-color: #fbfcfd;
+  min-height: 30em;
 }
 
 .landing-page.about h3 {
@@ -61,11 +70,19 @@ main {
   padding: 1.5em 0;
 }
 
+.landing-page.about section h4 {
+  color: #3b497c;
+  font-size: 1.3em;
+}
+
 
 .landing-page.about section {
   width: calc(100%/3);
-  font-size: 1.3em;
   padding: 1em;
+}
+
+.landing-page.about section p {
+  text-align: justify;
 }
 
 .graphic {
@@ -98,19 +115,163 @@ main {
   color: #000;
 }
 
+aside {
+  width: 100%;
+  background-color: #6679bf;
+  color: #fff;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+}
+
+aside section {
+  width: 50%;
+  padding: 1em 2%;
+}
+
+aside section p {
+  padding: 0 3%;
+}
+
+aside nav {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row nowrap;
+  width: 50%;
+}
+
+.aside-nav-element {
+  width: calc(100% / 3);
+  padding: 1em 5%;
+  text-align: center;
+  color: #000;
+  background-color: #a3aed8;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.aside-nav-element:nth-of-type(2) {
+  border-left: .1em solid #fff;
+  border-right: .1em solid #fff;
+}
+
+.aside-nav-element input {
+  border: 0;
+  font-family: 'Quicksand', sans-serif;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+}
+
+.aside-nav-element input:hover {
+  cursor: pointer;
+}
+
+.aside-nav-element:hover {
+  background-color: #fffa99;
+  color: #000;
+}
+
+.topics {
+  padding: 1em 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  min-height: 25em;
+}
+
+.topics h2 {
+  font-size: 2em;
+  width: 100%;
+}
+
+.topics h3 {
+  font-size: 1.5em;
+  width: 50%;
+  padding: 2em 3%;
+  align-self: stretch;
+  margin-left: 25%;
+  font-style: italic;
+  color: #808080;
+}
+
+.topics:first-of-type {
+  background-color: #fff;
+}
+
+.form {
+  padding: 2em 5%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background-color: #fff;
+  margin: 1em auto;
+  font-size: 1.5em;
+  border-radius: .2em;
+  position: relative;
+}
+
+.form:first-of-type {
+  margin-top: 5em;
+}
+
+.form legend {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #6679bf;
+  text-align: center;
+  padding: .2em 0;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.form label {
+  margin: 1.5em 0 .3em 0;
+}
+
+.form input[type="text"] {
+  width: 70%;
+  padding: .2em 2%;
+}
+
 footer {
-  background-color: #3b497c;
+  background-color: #000;
   color: #fff;
   text-align: center;
   padding: 1em 5%;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
-@media (max-width: 600px){
+@media (max-width: 600px) {
+
   .landing-page.about section {
     width: 100%;
   }
 
-  header {
+  body {
     font-size: .7em;
   }
+
+  aside section {
+    width: 100%;
+  }
+
+  aside section p {
+    padding: 0 3%;
+  }
+
+  aside nav {
+    width: 100%;
+  }
+
 }

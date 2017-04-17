@@ -9,44 +9,65 @@
     </header>
     <main>
       <aside>
-        <p>Hi <%= user.username; %>!</p>
-        <a href="/topics/new">add a new topic</a>
-        <a href="/users/<%=user._id%>/edit">edit your profile settings</a>
+        <section>
+          <h2>Hi <%= user.username; %>!</h2>
+          <p>What would you like to do?</p>
+        </section>
+        <nav>
+          <a class="aside-nav-element" href="/topics/new">add a topic</a>
+          <a class="aside-nav-element" href="/users/<%=user._id%>/edit">edit profile</a>
+          <form class="aside-nav-element" action="/sessions?_method=DELETE" method="POST">
+            <input type="submit" value="log out">
+          </form>
+        </nav>
       </aside>
       <!-- CURRENT USER'S TOPICS -->
-      <h2>Your topics</h2>
-      <ul>
-        <% for (var i = 0; i < userTopics.length; i++) { %>
-          <li>
-            <section>
-              <header>
-                <h3>
-                  <a href="/topics/<%= userTopics[i].id; %>"><%= userTopics[i].title; %></a>
-                </h3>
-                <section><%= userTopics[i].description; %></section>
-              </header>
-            </section>
-          </li>
+      <section class="topics">
+        <h2>Your topics</h2>
+        <% if (userTopics.length > 0) { %>
+          <ul>
+            <% for (var i = 0; i < userTopics.length; i++) { %>
+              <li>
+                <section>
+                  <header>
+                    <h3>
+                      <a href="/topics/<%= userTopics[i].id; %>"><%= userTopics[i].title; %></a>
+                    </h3>
+                    <section><%= userTopics[i].description; %></section>
+                  </header>
+                </section>
+              </li>
+            <% } %>
+          </ul>
+        <% } else { %>
+          <h3>Nothing to see, yet. Click 'add a topic' above to start working on your first set of flash cards.</h3>
         <% } %>
-      </ul>
+      </section>
       <!-- OTHER USERS' TOPICS -->
-      <h2>See what other people are studying</h2>
-      <ul>
-        <% for (var i = 0; i < otherTopics.length; i++) { %>
-          <li>
-            <section>
-              <header>
-                <h3>
-                  <a href="/topics/<%= otherTopics[i].id; %>"><%= otherTopics[i].title; %></a>
-                </h3>
-                <section><%= otherTopics[i].description; %></section>
-              </header>
-            </section>
-          </li>
+      <section class="topics">
+        <h2>See what other people are studying</h2>
+        <% if (otherTopics.length > 0) { %>
+        <ul>
+          <% for (var i = 0; i < otherTopics.length; i++) { %>
+            <li>
+              <section>
+                <header>
+                  <h3>
+                    <a href="/topics/<%= otherTopics[i].id; %>"><%= otherTopics[i].title; %></a>
+                  </h3>
+                  <section><%= otherTopics[i].description; %></section>
+                </header>
+              </section>
+            </li>
+          <% } %>
+        </ul>
+        <% } else { %>
+          <h3>Nothing to see, yet. Share a link to this site with a friend and start cramming together.</h3>
         <% } %>
-      </ul>
+      </section>
     </main>
     <footer>
+      <% include ../partials/footer %>
     </footer>
   </body>
 </html>

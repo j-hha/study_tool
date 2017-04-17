@@ -5,8 +5,15 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="6.94444in" height="5.35556in"
      viewBox="0 0 625 482">
+     <defs>
+       <radialGradient id="light" cx="50%" c="50%" r="70%" fx="50%" fy="50%">
+         <stop offset="0%" style="stop-color:rgb(255,255,255); stop-opacity:0" />
+         <stop offset="100%" style="stop-color:rgb(255,250,153); stop-opacity:1" />
+       </radialGradient>
+     </defs>
+     <!-- Linear Gradient code based on: https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_radial -->
      <path id="Selection #1"
-           fill="none" stroke="black" stroke-width="1"
+           fill="url(#light)" stroke="none" stroke-width="0"
            d="M 234.00,363.00
               C 231.94,363.00 228.38,363.26 226.70,362.01
                 224.61,360.46 222.57,353.61 221.66,351.00

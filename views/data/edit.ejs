@@ -8,7 +8,7 @@
       <% include ../partials/header %>
     </header>
     <main>
-      <form action="/data/<%= card.id %>/?_method=PUT" method="POST">
+      <form class="form" action="/data/<%= card.id %>/?_method=PUT" method="POST">
         <legend>Edit flash card</legend>
         <label for="question">question:</label>
         <textarea name="question"><%= card.question; %></textarea>
