@@ -1,7 +1,7 @@
 // ------------------- set up express -------------------
 var express = require('express'),
     app = express(),
-    port = 3000;
+    port = process.env.PORT || 3000;
 
 // ------------------- set up express-static -------------------
 var serve = require('express-static');
@@ -47,9 +47,10 @@ app.use('/sessions', sessionsController);
 
 // ------------------- connect to database -------------------
 var mongoose = require('mongoose'),
-    db = mongoose.connection;
+    db = mongoose.connection,
+    mongoDBUIR= process.env.MONGODB_URI || 'mongodb://localhost:27017/study_tool'
 
-mongoose.connect('mongodb://localhost:27017/study_tool');
+mongoose.connect(mongoDBUIR);
 
 db.once('open', function() {
   console.log('Server for study_app connected to mongo');
