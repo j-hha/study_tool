@@ -85,13 +85,17 @@ router.post('/', permissions.loggedIn, function (req, res) {
       creator: req.session.currentUserId
     },
     function(err, createdTopic) {
-      res.redirect('/topics');
-    });
+      User.findByIdAndUpdate(req.session.currentUserId, { $push: { topics: createdTopic._id } }, {'new': true}, function (err, updatedUser) {
+        console.log(updatedUser);
+        console.log(err);
+        res.redirect('/topics');
+      });
+  });
 });
 
 // ------------------- PUT route -------------------
 router.put('/:id', permissions.loggedIn, function (req, res) {
-  Topic.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedTopic) {
+  Topic.findByIdAndUpdate(req.params.id, req.body, {'new': true}, function (err, updatedTopic) {
     res.redirect('/topics/' + req.params.id);
   });
 });
@@ -100,7 +104,11 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
 router.delete('/:id', permissions.loggedIn, function (req, res) {
   Topic.findByIdAndRemove(req.params.id, function (err, deletedTopic) {
     //FILL WITH LOGIC FOR DELETING TOPIC ID FROM USER AND FLASH CARDS
-    res.redirect('/');
+    User.findByIdAndUpdate(deletedTopic.creator, { $pull: {topics: deletedTopic._id } }, {'new': true}, function(err, udpatedUser) {
+      console.log('topic delete'+ err);
+      console.log('topic delete' + udpatedUser);
+      res.redirect('/');
+    });
   });
 });
 

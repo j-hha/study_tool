@@ -36,12 +36,10 @@
           <% for (var i = 0; i < otherTopics.length; i++) { %>
             <li>
               <section class="other-topics-index">
-                <header>
                   <h3>
                     <a href="/topics/<%= otherTopics[i].id; %>"><%= otherTopics[i].title; %></a>
                   </h3>
                   <section><%= otherTopics[i].description; %></section>
-                </header>
               </section>
             </li>
           <% } %>

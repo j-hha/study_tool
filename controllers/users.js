@@ -157,8 +157,14 @@ router.delete('/:id', permissions.loggedIn, function (req, res) {
   User.findByIdAndRemove(req.params.id, function (err, deletedUser) {
     console.log(err);
     console.log(deletedUser);
+    for (var i = 0; i < deletedUser.topics.length; i++) {
+      Topic.findByIdAndRemove(deletedUser.topics[i], function(err, deletedTopic) {
+        console.log(err);
+        console.log(deletedTopic);
+        //FILL WITH LOGIC FOR DELETING FLASH CARDS
+      });
+    }
     if (!err) {
-      //FILL WITH LOGIC FOR DELETING TOPICS AND FLASH CARDS
       req.session.destroy(function () {
         res.redirect('/users/delete/success');
       });
