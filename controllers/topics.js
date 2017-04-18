@@ -37,15 +37,22 @@ router.get('/', permissions.loggedIn, function (req, res) {
 
 //GET topics new page
 router.get('/new', permissions.loggedIn, function (req, res) {
-  res.render('topics/new.ejs');
+  User.findById(req.session.currentUserId, function(err, foundUser){
+    res.render('topics/new.ejs', {
+      user: foundUser
+    });
+  });
 });
 
 
 //GET topics edit page
 router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   Topic.findById(req.params.id, function (err, foundTopic) {
-    res.render('topics/edit.ejs', {
-      topic: foundTopic
+    User.findById(req.session.currentUserId, function(err, foundUser){
+      res.render('topics/edit.ejs', {
+        topic: foundTopic,
+        user: foundUser
+      });
     });
   });
 });
@@ -54,10 +61,14 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
 //GET topics show page
 router.get('/:id', permissions.loggedIn, function (req, res) {
   Topic.findById(req.params.id, function (err, foundTopic) {
+    console.log(err);
     Data.find({topic: req.params.id}, function (err, foundCard) {
-      res.render('topics/show.ejs', {
-        topic: foundTopic,
-        cards: foundCard
+      User.findById(req.session.currentUserId, function(err, foundUser){
+        res.render('topics/show.ejs', {
+          topic: foundTopic,
+          cards: foundCard,
+          user: foundUser
+        });
       });
     });
   });

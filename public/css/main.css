@@ -151,16 +151,16 @@ aside {
   justify-content: space-between;
   flex-flow: row nowrap;
   align-items: center;
-  color: #000;
+  color: #fff;
   height: 10em;
 }
 
 aside a {
-  color: #000;
+  color: #fff;
 }
 
 aside a:hover {
-  color: #fff;
+  color: #000;
 }
 
 .light-bulb {
@@ -216,6 +216,10 @@ aside a:hover {
 
 .user-topics-index a {
   color: #000;
+}
+
+.user-topics-index a:hover {
+  color: #808080;
 }
 
 .user-topics-index h4 {
