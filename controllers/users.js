@@ -161,7 +161,12 @@ router.delete('/:id', permissions.loggedIn, function (req, res) {
       Topic.findByIdAndRemove(deletedUser.topics[i], function(err, deletedTopic) {
         console.log(err);
         console.log(deletedTopic);
-        //FILL WITH LOGIC FOR DELETING FLASH CARDS
+        for (var j = 0; j < deletedTopic.flashcards.length; j++) {
+          Data.findByIdAndRemove(deletedTopic.flashcards[j], function (err, deletedFlashcard) {
+            console.log('topic and flashcard delete' + err);
+            console.log('topic and flashcard delete' + deletedFlashcard);
+          });
+        }
       });
     }
     if (!err) {
