@@ -14,7 +14,8 @@ var permissions = require('../middleware/permissions.js');
 router.get('/new/:topicId', permissions.loggedIn, function (req, res) {
   Topic.findById(req.params.topicId, function (err, foundTopic) {
     res.render('data/new.ejs', {
-      topic: foundTopic
+      topic: foundTopic,
+      user: req.session.currentUserId
     });
   });
 });
@@ -24,7 +25,8 @@ router.get('/new/:topicId', permissions.loggedIn, function (req, res) {
 router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   Data.findById(req.params.id, function (err, foundCard) {
     res.render('data/edit.ejs', {
-      card: foundCard
+      card: foundCard,
+      user: req.session.currentUserId
     });
   });
 });
@@ -39,10 +41,17 @@ router.post('/:topicId', permissions.loggedIn, function (req, res) {
       topic: req.params.topicId,
       author: req.session.currentUserId
     },
-    function(err, createdTopic) {
-      res.redirect('/topics/' + req.params.topicId);
+    function(err, createdCard) {
+      console.log('create card' + err);
+      console.log('create card' + createdCard);
+      Topic.findByIdAndUpdate(req.params.topicId, { $push: { flashcards: createdCard._id } }, {'new': true}, function(err, updatedTopic) {
+        console.log('create card + update' + err);
+        console.log('create card + update' + updatedTopic);
+        res.redirect('/topics/' + req.params.topicId);
+      });
     });
-});
+  });
+
 
 // ------------------- PUT route -------------------
 router.put('/:id', permissions.loggedIn, function (req, res) {
