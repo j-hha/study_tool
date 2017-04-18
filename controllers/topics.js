@@ -104,6 +104,12 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
 router.delete('/:id', permissions.loggedIn, function (req, res) {
   Topic.findByIdAndRemove(req.params.id, function (err, deletedTopic) {
     //FILL WITH LOGIC FOR DELETING TOPIC ID FROM USER AND FLASH CARDS
+    for (var i = 0; i < deletedTopic.flashcards.length; i++) {
+      Data.findByIdAndRemove(deletedTopic.flashcards[i], function (err, deletedFlashcard) {
+        console.log('topic and flashcard delete' + err);
+        console.log('topic and flashcard delete' + deletedFlashcard);
+      });
+    }
     User.findByIdAndUpdate(deletedTopic.creator, { $pull: {topics: deletedTopic._id } }, {'new': true}, function(err, udpatedUser) {
       console.log('topic delete'+ err);
       console.log('topic delete' + udpatedUser);
