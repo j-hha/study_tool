@@ -9,32 +9,21 @@
     </header>
     <main>
       <aside>
-        <section>
           <h2>Hi <%= user.username; %>!</h2>
-          <p>What would you like to do?</p>
-        </section>
-        <nav>
-          <a class="aside-nav-element" href="/topics/new">add a topic</a>
-          <a class="aside-nav-element" href="/users/<%=user._id%>/edit">edit profile</a>
-          <form class="aside-nav-element" action="/sessions?_method=DELETE" method="POST">
-            <input type="submit" value="log out">
-          </form>
-        </nav>
+          <a href="/topics/new">add a new topic</a>
       </aside>
       <!-- CURRENT USER'S TOPICS -->
+      <div class="light-bulb"></div>
       <section class="topics">
-        <h2>Your topics</h2>
         <% if (userTopics.length > 0) { %>
-          <ul>
             <% for (var i = 0; i < userTopics.length; i++) { %>
-              <li class="user-topics-index">
-                    <h3>
-                      <a href="/topics/<%= userTopics[i].id; %>"><%= userTopics[i].title; %></a>
-                    </h3>
-                    <%= userTopics[i].description; %>
-              </li>
+              <section class="user-topics-index">
+                <a href="/topics/<%= userTopics[i].id; %>">
+                  <h4><%= userTopics[i].title; %></h4>
+                </a>
+                <p><%= userTopics[i].description; %></p>
+              </section>
             <% } %>
-          </ul>
         <% } else { %>
           <h3>Nothing to see, yet. Click 'add a topic' above to start working on your first set of flash cards.</h3>
         <% } %>
