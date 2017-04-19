@@ -11,9 +11,9 @@
       <form class="form" action="/data/<%= topic._id; %>" method="POST">
         <legend>Add new flash card</legend>
         <label for="question">question:</label>
-        <textarea name="question"></textarea>
+        <textarea name="question" required></textarea>
         <label for="answer">answer:</label>
-        <textarea name="answer"></textarea>
+        <textarea name="answer" required></textarea>
         <input type="submit" value="create">
       </form>
     </main>

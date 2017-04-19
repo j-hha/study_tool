@@ -9,15 +9,16 @@
     </header>
     <main>
       <aside>
-          <h2>Hi <%= user.username; %>!</h2>
-          <a href="/topics/new">add a new topic</a>
+        <% include ../partials/aside %>
+
       </aside>
       <!-- CURRENT USER'S TOPICS -->
       <div class="light-bulb"></div>
       <section class="topics">
+        <h2>Your topics</h2>
         <% if (userTopics.length > 0) { %>
             <% for (var i = 0; i < userTopics.length; i++) { %>
-              <section class="user-topics-index">
+              <section class="topics-index user-topics">
                 <a href="/topics/<%= userTopics[i].id; %>">
                   <h4><%= userTopics[i].title; %></h4>
                 </a>
@@ -32,18 +33,14 @@
       <section class="topics">
         <h2>See what other people are studying</h2>
         <% if (otherTopics.length > 0) { %>
-        <ul>
           <% for (var i = 0; i < otherTopics.length; i++) { %>
-            <li>
-              <section class="other-topics-index">
-                  <h3>
-                    <a href="/topics/<%= otherTopics[i].id; %>"><%= otherTopics[i].title; %></a>
-                  </h3>
-                  <section><%= otherTopics[i].description; %></section>
+              <section class="topics-index other-topics">
+                    <a href="/topics/<%= otherTopics[i].id; %>">
+                      <h4><%= otherTopics[i].title; %></h4>
+                    </a>
+                  <p><%= otherTopics[i].description; %></p>
               </section>
-            </li>
           <% } %>
-        </ul>
         <% } else { %>
           <h3>Nothing to see, yet. Share a link to this site with a friend and start cramming together.</h3>
         <% } %>

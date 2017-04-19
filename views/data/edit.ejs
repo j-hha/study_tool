@@ -11,14 +11,15 @@
       <form class="form" action="/data/<%= card.id %>/?_method=PUT" method="POST">
         <legend>Edit flash card</legend>
         <label for="question">question:</label>
-        <textarea name="question"><%= card.question; %></textarea>
+        <textarea name="question" required><%= card.question; %></textarea>
         <label for="answer">answer:</label>
-        <textarea name="answer"><%= card.answer; %></textarea>
+        <textarea name="answer" required><%= card.answer; %></textarea>
         <input type="submit" value="update">
       </form>
       <hr / >
-      <form action="/data/<%= card.id; %>/?_method=DELETE" method="post">
-        <input type="submit" value="DELETE">
+      <form class="form" action="/data/<%= card.id; %>/?_method=DELETE" method="post">
+        <legend>Delete flash card</legend>
+        <input class="delete-btn" type="submit" value="DELETE">
       </form>
     </main>
     <footer>

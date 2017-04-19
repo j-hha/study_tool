@@ -11,13 +11,14 @@
       <form class="form" action="/topics/<%= topic.id %>/?_method=PUT" method="POST">
         <legend>Edit topic</legend>
         <label for="title">title:</label>
-        <input type="text" name="title" value="<%= topic.title %>">
+        <input type="text" name="title" value="<%= topic.title %>" required>
         <label for="description">description:</label>
         <textarea name="description"><%= topic.description %></textarea>
         <input type="submit" value="update">
       </form>
-      <form action="/topics/<%= topic.id; %>/?_method=DELETE" method="post">
-        <input type="submit" value="DELETE">
+      <form class="form" action="/topics/<%= topic.id; %>/?_method=DELETE" method="post">
+        <legend>Delete topic</legend>
+        <input class="delete-btn" type="submit" value="DELETE">
       </form>
     </main>
     <footer>

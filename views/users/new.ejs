@@ -11,12 +11,12 @@
       <form class="form" action="/users" method="POST">
         <legend>Create a new account</legend>
         <label for="username">username: </label>
-        <input type="text" name="username" id="username">
+        <input type="text" name="username" id="username" minlength="3" required>
         <p>Please note: The username has to be at least three characters long.</p>
         <label for="password">password:</label>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" minlength="8" required>
         <label for="passwordConfirm">please confirm:</label>
-        <input type="password" name="passwordConfirm" id="passwordConfirm">
+        <input type="password" name="passwordConfirm" id="passwordConfirm" minlength="8" required>
         <p>Please note: The password has to be at least eight characters long.</p>
         <input type="submit" value="register">
       </form>

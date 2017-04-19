@@ -8,33 +8,30 @@
       <% include ../partials/header %>
     </header>
     <main>
-      <section>
-        <header>
-          <h3>
-            <%= topic.title; %>
-          </h3>
-          <nav>
-            <a href="/topics/<%= topic._id; %>/edit">edit</a>
-            <a href="/data/new/<%= topic._id; %>">add new flash card</a>
-          </nav>
-          <section><%= topic.description; %></section>
-          <section>
-            <ul>
-              <% for (var i = 0; i < cards.length; i++) { %>
-                <li>
-                  <section>
-                    <h4><%= cards[i].question; %></h4>
-                    <p><%= cards[i].answer; %></p>
-                    <footer>
-                      <a href="/data/<%= cards[i]._id %>/edit">edit card</a>
-                    </footer>
-                  </section>
-                </li>
+        <aside>
+          <% include ../partials/aside %>
+        </aside>
+        <div class="light-bulb"></div>
+        <section class="topic-options">
+          <h2><%= topic.title; %></h2>
+          <p><%= topic.description; %></p>
+            <section>
+              <% if (user.id === topic.creator) { %>
+              <a href="/data/new/<%= topic._id; %>">add flash card</a>
+              <a href="/topics/<%= topic._id; %>/edit">edit this topic</a>
               <% } %>
-            </ul>
-          </section>
-        </header>
-      </section>
+              <a href="#">revise</a>
+            </section>
+        </section>
+        <section class="collection">
+          <% for (var i = 0; i < cards.length; i++) { %>
+            <section class="flash-card">
+              <h4><%= cards[i].question; %></h4>
+              <p><%= cards[i].answer; %></p>
+              <a href="/data/<%= cards[i]._id %>/edit">edit card</a>
+            </section>
+          <% } %>
+        </section>
     </main>
     <footer>
     </footer>

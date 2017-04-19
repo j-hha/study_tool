@@ -155,13 +155,82 @@ aside {
   height: 10em;
 }
 
+aside section {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column ;
+}
+
+aside section:first-of-type {
+  text-align: left;
+  align-items: flex-start;
+}
+
+aside section:last-of-type {
+  text-align: right;
+  align-items: flex-end;
+}
+
 aside a {
   color: #fff;
+  padding: .5em 0;
 }
 
 aside a:hover {
   color: #000;
+  padding: .5em 0;
 }
+
+aside h2 {
+  font-size: 1.3em;
+}
+
+/*aside p {
+  padding: .3em 3%;
+  color: #f8f8f8;
+  font-size: .8em;
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  based on: https://css-tricks.com/snippets/css/truncate-string-with-ellipsis/
+}*/
+
+.topic-options {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.topic-options h2 {
+  text-transform: uppercase;
+}
+
+.topic-options section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-top: .1em dotted #808080;
+  margin: .5em 0;
+  color: #808080;
+
+}
+
+.topic-options section a {
+  padding: .5em 1%;
+  color: #808080;
+}
+
+.topic-options section a:hover {
+  color: #6cdea0;
+}
+
 
 .light-bulb {
   width: 8em;
@@ -184,12 +253,13 @@ aside a:hover {
   justify-content: flex-start;
   align-items: flex-start;
   min-height: 30em;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .topics h2 {
   font-size: 2em;
   padding: 0;
+  width: 100%;
 }
 
 .topics h3 {
@@ -206,41 +276,83 @@ aside a:hover {
   background-color: #f9f9f9
 }
 
-.user-topics-index {
+.topics-index {
   border-top: .2em solid #6cdea0;
-  background-color: #f9f9f9;
   width: 48%;
-  margin: 0 1% 1em 1%;
+  margin: 1em 1% 0 1%;
   padding: 1em 5%;
 }
 
-.user-topics-index a {
+.topics-index a {
   color: #000;
 }
 
-.user-topics-index a:hover {
+.topics-index a:hover {
   color: #808080;
 }
 
-.user-topics-index h4 {
-  font-size: 2em;
-  text-align: center;
+.topics-index h4 {
+  font-size: 1.5em;
+  text-align: left;
 }
 
-.user-topics-index p {
-  font-size: 1.5em;
-  padding: .3em 0;
+.topics-index p {
+  font-size: 1.3em;
+  padding: .3em 3%;
   text-align: justify;
 }
 
-
-.other-topics-index {
-  background-color: #fff;
-  padding: 1em 5%;
-  border-radius: .3em;
-  width: calc(100%/3);
+.user-topics {
+  background-color: #f9f9f9;
 }
 
+.other-topics {
+  background-color: #fff;
+}
+
+.collection {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.flash-card {
+  width: 30%;
+  background-color: #fff;
+  box-shadow: .2em .2em .5em .1em #ccc;
+  border-radius: .2em;
+  margin: .5em 1%;
+}
+
+.flash-card h4 {
+  background-color: #808080;
+  color: #fff;
+  border-top-left-radius: .2em;
+  border-top-right-radius: .2em;
+  font-size: 1.3em;
+
+}
+
+.flash-card p {
+  padding: .5em 5%;
+  font-size: 1.1em;
+  text-align: justify;
+}
+
+.flash-card a {
+  width: 100%;
+  display: block;
+  font-size: 1em;
+  text-align: right;
+  color: #808080;
+  padding: .3em 3%;
+}
+
+.flash-card a:hover {
+  color: #6cdea0;
+}
 
 .form {
   padding: 2em 5%;
@@ -303,8 +415,8 @@ aside a:hover {
 }
 
 .form input[type="submit"]:hover {
-  background-color: #ccc;
-  color: #000;
+  background-color: #808080;
+  color: #fff;
 }
 
 .form p {
@@ -351,24 +463,15 @@ footer p {
     font-size: .7em;
   }
 
-  aside section {
-    width: 100%;
-  }
-
-  aside section p {
-    padding: 0 3%;
-  }
-
-  aside nav {
-    width: 100%;
-  }
-
   .form {
     width: 90%;
   }
 
-  .user-topics-index {
+  .topics-index {
     width: 100%;
+  }
+  .flash-card {
+    width: 90%;
   }
 
 }

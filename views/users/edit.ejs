@@ -11,15 +11,15 @@
       <form class="form" action="/users/<%=user.id%>/?_method=PUT" method="POST">
         <legend>Change username</legend>
         <label for="username">username: </label>
-        <input type="text" name="username" id="username" value="<%=user.username%>">
+        <input type="text" name="username" id="username" value="<%=user.username%>" minlength="3" required>
         <input type="submit" value="update">
       </form>
       <form class="form" action="/users/<%=user.id%>/password/?_method=PUT" method="POST">
         <legend>Change password</legend>
         <label for="password">new password:</label>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" minlength="8" required>
         <label for="passwordConfirm">please confirm:</label>
-        <input type="password" name="passwordConfirm" id="passwordConfirm">
+        <input type="password" name="passwordConfirm" id="passwordConfirm" minlength="8" required>
         <input type="submit" value="update">
       </form>
       <form class="form" action="/users/<%=user.id%>/?_method=DELETE" method="POST">

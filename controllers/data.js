@@ -66,7 +66,6 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
 
 router.delete('/:id', permissions.loggedIn, function (req, res) {
   Data.findByIdAndRemove(req.params.id, function (err, deletedCard) {
-    //FILL WITH LOGIC FOR DELETING DATA ID FROM TOPICS
     Topic.findByIdAndUpdate(deletedCard.topic,
       { $pull: {flashcards: deletedCard._id} }, {'new': true}, function (err, updatedTopic) {
           console.log('delete card and update topic' + err);
