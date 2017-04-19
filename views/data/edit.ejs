@@ -16,13 +16,13 @@
         <textarea name="answer" required><%= card.answer; %></textarea>
         <input type="submit" value="update">
       </form>
-      <hr / >
       <form class="form" action="/data/<%= card.id; %>/?_method=DELETE" method="post">
         <legend>Delete flash card</legend>
         <input class="delete-btn" type="submit" value="DELETE">
       </form>
     </main>
     <footer>
+      <% include ../partials/footer %>
     </footer>
   </body>
 </html>

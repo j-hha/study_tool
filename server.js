@@ -64,7 +64,9 @@ var permissions = require('./middleware/permissions.js');
 
 // GET landing page
 app.get('/', permissions.unknownUser, function (req, res) {
-  res.render('index.ejs');
+  res.render('index.ejs', {
+    user: undefined
+  });
 });
 
 

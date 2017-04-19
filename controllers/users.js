@@ -19,7 +19,8 @@ var permissions = require('../middleware/permissions.js');
 router.get('/new/success',  function (req, res) {
   res.render('status.ejs', {
     success: true,
-    origin: 'new user'
+    origin: 'new user',
+    user: undefined
   })
 });
 
@@ -27,13 +28,16 @@ router.get('/new/success',  function (req, res) {
 router.get('/new/fail',  function (req, res) {
   res.render('status.ejs', {
     success: false,
-    origin: 'new user'
+    origin: 'new user',
+    user: undefined
   })
 });
 
 // GET sign-up page
 router.get('/new', permissions.unknownUser, function (req, res) {
-    res.render('users/new.ejs');
+    res.render('users/new.ejs', {
+      user: undefined
+    });
 });
 
 // GET delete user profile success page
@@ -41,6 +45,7 @@ router.get('/delete/success', function (req, res) {
   res.render('status.ejs', {
     success: true,
     origin: 'delete profile',
+    user: undefined
   });
 });
 

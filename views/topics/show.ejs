@@ -30,12 +30,15 @@
             <section class="flash-card">
               <h4><%= cards[i].question; %></h4>
               <p><%= cards[i].answer; %></p>
+              <% if (user.id === topic.creator) { %>
               <a href="/data/<%= cards[i]._id %>/edit">edit card</a>
+                <% } %>
             </section>
           <% } %>
         </section>
     </main>
     <footer>
+      <% include ../partials/footer %>
     </footer>
   </body>
 </html>
