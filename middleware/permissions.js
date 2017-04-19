@@ -25,7 +25,14 @@ var permissions = {
     } else {
       return res.redirect('/topics');
     }
+  },
+  author: function (req, res, next) {
+    if (req.session.currentUserId !== undefined) {
+      return next();
+  } else {
+    return res.redirect('/topics');
   }
+}
 };
 
 module.exports = permissions;

@@ -55,7 +55,7 @@ router.get('/:id/delete/fail', permissions.loggedIn,  function (req, res) {
     res.render('status.ejs', {
       success: false,
       origin: 'delete profile',
-      user: foundUser
+      user: foundUser,
     });
   });
 });
@@ -63,18 +63,29 @@ router.get('/:id/delete/fail', permissions.loggedIn,  function (req, res) {
 // GET edit page
 router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    res.render('users/edit.ejs', {
-      user: foundUser
-    });
+    if (foundUser.id === req.session.currentUserId) {
+      res.render('users/edit.ejs', {
+        user: foundUser
+      });
+    } else {
+      res.send('DENIED');
+    }
   });
 });
 
 // GET  edit success page
 router.get('/:id/edit/success', permissions.loggedIn,  function (req, res) {
-  res.render('status.ejs', {
-    success: true,
-    origin: 'update user'
-  })
+  User.findById(req.params.id, function(err, foundUser) {
+    if (foundUser.id === req.session.currentUserId) {
+      res.render('status.ejs', {
+        success: true,
+        origin: 'update user',
+        user: foundUser
+      });
+    } else {
+      res.send('DENIED');
+    }
+  });
 });
 
 // GET edit fail page
@@ -90,20 +101,31 @@ router.get('/:id/edit/fail', permissions.loggedIn,  function (req, res) {
 
 // GET edit password success page
 router.get('/:id/edit/password/success', permissions.loggedIn, function (req, res) {
-  res.render('status.ejs', {
-    success: true,
-    origin: 'update password'
+  User.findById(req.params.id, function(err, foundUser) {
+    if (foundUser.id === req.session.currentUserId) {
+      res.render('status.ejs', {
+        success: true,
+        origin: 'update password',
+        user: foundUser
+      });
+    } else {
+      res.send('DENIED');
+    }
   });
 });
 
 // GET edit password fail page
 router.get('/:id/edit/password/fail', permissions.loggedIn,  function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    res.render('status.ejs', {
-      success: false,
-      origin: 'update password',
-      user: foundUser
-    });
+    if (foundUser.id === req.session.currentUserId) {
+      res.render('status.ejs', {
+        success: false,
+        origin: 'update password',
+        user: foundUser
+      });
+    } else {
+      res.send('DENIED');
+    }
   });
 });
 
@@ -112,7 +134,7 @@ router.get('/:id/edit/password/fail', permissions.loggedIn,  function (req, res)
 // create new user
 router.post('/', permissions.unknownUser, function (req, res) {
   console.log(req.body);
-  // Please note: validating here that the user did not leave the password field empty (rather than relying on the schema validation) is vital! If an empty string gets passed to bcrypt, the result will be a string with a length > 0. An empty string as the password will therefore pass the Schema validation
+  // Please note: validating here that the user did not leave the password field empty (rather than relying on the schema validation) is vital! If an empty string gets passed to bcrypt, the result will be a string with a length > 0. An empty string as the password will therefore pass the Schema validation. This is a backup in case in-browser validation fails.
     if (req.body.password.length >= 8 && req.body.password === req.body.passwordConfirm) {
       req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
       User.create(req.body, function(err, createdUser) {
@@ -130,11 +152,17 @@ router.post('/', permissions.unknownUser, function (req, res) {
 // ------------------- PUT route -------------------
 // update user information
 router.put('/:id', permissions.loggedIn, function (req, res) {
-  User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }, function (err, updatedUser) {
-    if (err) {
-      res.redirect('/users/' + req.params.id + '/edit/fail');
+  User.findById(req.params.id, function (err, foundUser) {
+    if (foundUser.id === req.session.currentUserId) {
+      User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }, function (err, updatedUser) {
+        if (err) {
+          res.redirect('/users/' + req.params.id + '/edit/fail');
+        } else {
+          res.redirect('/users/' + req.params.id + '/edit/success');
+        }
+      });
     } else {
-      res.redirect('/users/' + req.params.id + '/edit/success');
+      res.send('DENIED!');
     }
   });
 });
