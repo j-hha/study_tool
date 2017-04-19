@@ -546,4 +546,8 @@ footer p {
     width: 90%;
   }
 
+  #final-score {
+    font-size: 1.5em;
+  }
+
 }
