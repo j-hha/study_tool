@@ -206,6 +206,7 @@ aside h2 {
   justify-content: center;
   align-items: center;
   text-align: center;
+  font-size: 1.5em;
 }
 
 .topic-options h2 {
@@ -216,7 +217,7 @@ aside h2 {
   width: 100%;
   display: flex;
   justify-content: center;
-  border-top: .1em dotted #808080;
+  border-top: .01em dotted #808080;
   margin: .5em 0;
   color: #808080;
 
@@ -252,8 +253,7 @@ aside h2 {
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  min-height: 30em;
-  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .topics h2 {
@@ -271,9 +271,12 @@ aside h2 {
   color: #808080;
 }
 
-.topics:last-of-type {
-  border-top: .2em solid #fff;
-  background-color: #f9f9f9
+.topics:first-of-type {
+  background-color: #fff;
+  background: -webkit-linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1));
+  background: -o-linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1));
+  background: -moz-linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1));
+  background: linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1));
 }
 
 .topics-index {
@@ -303,11 +306,13 @@ aside h2 {
 }
 
 .user-topics {
-  background-color: #f9f9f9;
+  background-color: #efefef;
+  box-shadow: .2em .2em .5em .1em #ccc;
 }
 
 .other-topics {
-  background-color: #fff;
+  background-color: #f8f8f8;
+  box-shadow: .2em .2em .5em .1em #ccc;
 }
 
 .collection {
@@ -533,6 +538,14 @@ footer p {
 
   body {
     font-size: .9em;
+  }
+
+  .topic-options {
+    width: 90%;
+  }
+
+  .topics h2 {
+    font-size: 1.3em;
   }
 
   .form {
