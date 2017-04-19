@@ -1,7 +1,8 @@
 $(function() {
 var pageElements = {
   $qField: $('.quiz-question'),
-  $aField: $('.quiz-answer')
+  $aField: $('.quiz-answer'),
+  $endMessage: $('<div>')
 }
 
 
@@ -77,7 +78,6 @@ var clickEvents = {
   }
 }
 
-
 pageElements.$aField.on('click', clickEvents.$checkAnwser);
 
 });
@@ -88,6 +88,14 @@ var currentRound = 0;
 var currentCard = {};
 var possibilities = [];
 var allFlashCards = [];
+var scoreCorrect = 0;
+var scoreWrong = 0;
+var total = allFlashCards.length;
+
+
+// calculates stats
+var tallyScores = function () {
+};
 
 // increases num of current round - as long as currentRound < allFlashCards.length
 var increaseRound = function () {
@@ -96,8 +104,10 @@ var increaseRound = function () {
     getCurrentCard();
     console.log(allFlashCards.length);
     console.log(currentRound);
+    return true;
   } else {
     console.log("The END!");
+    return false;
   }
 };
 
@@ -113,17 +123,19 @@ var compareAnswers = function (answer) {
   if (answer === currentCard.answer) {
     console.log('Your answer ' + answer);
     console.log('correct');
+    scoreCorrect++;
     return true;
   } else {
     console.log('Your answer ' + answer);
     console.log('incorrect');
+    scoreWrong++;
     return false;
   }
 };
 
 var addCorrectAnswer = function () {
   var randomNum = Math.floor(Math.random()*3);
-  possibilities.splice(randomNum, 0, currentCard.answer)
+  possibilities.splice(randomNum, 0, currentCard.answer);
 };
 
 var addWrongAnswers = function () {
