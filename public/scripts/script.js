@@ -4,6 +4,24 @@ var pageElements = {
   $aField: $('.quiz-answer')
 }
 
+
+// ------------------------------ Ajax Request -------------------------------
+
+var currentPage = window.location.href;
+var ajaxRequest = currentPage.replace('revise', 'cards');
+
+$.ajax(ajaxRequest)
+ .done(function(data) {
+   for (var i = 0; i < data.length; i++) {
+     allFlashCards.push(data[i]);
+   }
+   console.log(allFlashCards);
+   startGame();
+   changeView.$fillForm();
+ });
+
+ // --------------------------------------------------------------------------
+
 var changeView = {
   $fillForm: function () {
     pageElements.$qField.text(currentCard.question);
@@ -61,44 +79,15 @@ var clickEvents = {
 
 
 pageElements.$aField.on('click', clickEvents.$checkAnwser);
-startGame();
-changeView.$fillForm();
+
 });
 
-var allFlashCards = [
-  {
-    question: "question 1",
-    answer: "answer 1"
-  },
-  {
-    question: "question 2",
-    answer: "answer 2"
-  },
-  {
-    question: "question 3",
-    answer: "answer 3"
-  },
-  {
-    question: "question 4",
-    answer: "answer 4"
-  },
-  {
-    question: "question 5",
-    answer: "answer 5"
-  },
-  {
-    question: "question 6",
-    answer: "answer 6"
-  },
-  {
-    question: "question 7",
-    answer: "answer 7"
-  }
-];
+// ------------------------- Vanilla JS ---------------------------------
 
 var currentRound = 0;
 var currentCard = {};
 var possibilities = [];
+var allFlashCards = [];
 
 // increases num of current round - as long as currentRound < allFlashCards.length
 var increaseRound = function () {
@@ -131,13 +120,6 @@ var compareAnswers = function (answer) {
     return false;
   }
 };
-
-// var askQuestion = function () {
-//   console.log(currentCard.question);
-//   for (var i = 0; i < possibilities.length; i++) {
-//     console.log(possibilities[i]);
-//   }
-// }
 
 var addCorrectAnswer = function () {
   var randomNum = Math.floor(Math.random()*3);
@@ -176,47 +158,3 @@ var shuffleFlashCards = function () {
 var startGame = function () {
   shuffleFlashCards();
 };
-
-// startGame();
-// compareAnswers('answer 1');
-// getCurrentCard();
-// compareAnswers('answer 2');
-// getCurrentCard();
-// compareAnswers('answer 3');
-// getCurrentCard();
-// compareAnswers('answer 4');
-// getCurrentCard();
-// compareAnswers('answer 5');
-// getCurrentCard();
-// compareAnswers('answer 6');
-// getCurrentCard();
-// compareAnswers('answer 7');
-
-
-
-
-//// ajax
-
-// var currentPage = window.location.href;
-// var ajaxRequest = currentPage.replace('revise', 'cards');
-// var allFlashCards = [];
-
-// $.ajax(ajaxRequest)
-//  .done(function(data) {
-//    for (var i = 0; i < data.length; i++) {
-//      allFlashCards.push(data[i]);
-//    }
-//    console.log(allFlashCards);
-//
-//    for (var i = 0; i < allFlashCards.length; i++) {
-//      console.log("hi loop");
-//      var randomNum = Math.floor(Math.random()*allFlashCards.length);
-//      if (randomNum === i) {
-//        cardToShuffle = allFlashCards[i]
-//        allFlashCards.splice(randomNum, 1);
-//        allFlashCards.push(cardToShuffle);
-//      }
-//    }
-//    console.log(allFlashCards);
-//
-//  });

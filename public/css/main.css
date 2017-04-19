@@ -375,6 +375,7 @@ aside h2 {
   margin: .3em 0;
   color: #fff;
   font-weight: 600;
+  text-align: center;
 }
 
 .quiz-answer {
