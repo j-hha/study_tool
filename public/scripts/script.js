@@ -2,7 +2,10 @@ $(function() {
 var pageElements = {
   $qField: $('.quiz-question'),
   $aField: $('.quiz-answer'),
-  $endMessage: $('<div>')
+  $finalScore: $('#final-score'),
+  $correctField: $('#correct'),
+  $wrongField: $('#wrong'),
+  $total: $('#total')
 }
 
 
@@ -16,7 +19,7 @@ $.ajax(ajaxRequest)
    for (var i = 0; i < data.length; i++) {
      allFlashCards.push(data[i]);
    }
-   console.log(allFlashCards);
+   total = allFlashCards.length;
    startGame();
    changeView.$fillForm();
  });
@@ -59,8 +62,21 @@ var changeView = {
   $resetView: function () {
     setTimeout(function () {
       resetForNextRound();
-      changeView.$fillForm();
+      var quizNotFinished = checkStatus();
+      if (quizNotFinished) {
+        increaseRound();
+        getCurrentCard();
+        changeView.$fillForm();
+      } else {
+        changeView.$showFinalScore();
+      }
     }, 1300);
+  },
+  $showFinalScore: function () {
+    pageElements.$correctField.text(scoreCorrect);
+    pageElements.$wrongField.text(scoreWrong);
+    pageElements.$total.text(total);
+    pageElements.$finalScore.show('slow');
   }
 }
 
@@ -90,25 +106,19 @@ var possibilities = [];
 var allFlashCards = [];
 var scoreCorrect = 0;
 var scoreWrong = 0;
-var total = allFlashCards.length;
+var total = 0;
 
-
-// calculates stats
-var tallyScores = function () {
-};
+var checkStatus = function () {
+  if (currentRound < allFlashCards.length-1) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 // increases num of current round - as long as currentRound < allFlashCards.length
 var increaseRound = function () {
-  if (currentRound < allFlashCards.length-1) {
     currentRound++;
-    getCurrentCard();
-    console.log(allFlashCards.length);
-    console.log(currentRound);
-    return true;
-  } else {
-    console.log("The END!");
-    return false;
-  }
 };
 
 // add currentCard object back to allFlashCards array at its original position
@@ -116,7 +126,6 @@ var resetForNextRound = function () {
   allFlashCards.splice(currentRound, 0, currentCard);
   currentCard = {};
   possibilities = [];
-  increaseRound();
 };
 
 var compareAnswers = function (answer) {
