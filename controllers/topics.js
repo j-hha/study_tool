@@ -44,6 +44,17 @@ router.get('/new', permissions.loggedIn, function (req, res) {
   });
 });
 
+//GET topics edit page
+router.get('/:id/revise', function (req, res) {
+  Topic.findById(req.params.id, function (err, foundTopic) {
+    User.findById(req.session.currentUserId, function(err, foundUser){
+      res.render('topics/revise.ejs', {
+        topic: foundTopic,
+        user: foundUser
+      });
+    });
+  });
+});
 
 //GET topics edit page
 router.get('/:id/edit', permissions.loggedIn, function (req, res) {
@@ -71,6 +82,14 @@ router.get('/:id', permissions.loggedIn, function (req, res) {
         });
       });
     });
+  });
+});
+
+//GET JASON
+
+router.get('/:id/cards', function (req, res) {
+  Data.find({topic: req.params.id}, function (err, foundCards) {
+    res.send(foundCards);
   });
 });
 
