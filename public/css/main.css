@@ -82,21 +82,37 @@ main {
 .landing-page {
   padding: 1em;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   flex-flow: row wrap;
   text-align: center;
-  min-height: 32em;
+  min-height: 30em;
 }
 
 .landing-page:first-of-type {
   color: #000;
   background-color: #6cdea0;
-  font-family: 'Limelight', cursive;
+  background-image: url('/img/brain.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+  color: #fff;
+  position: relative;
 }
 
-.down {
+.landing-page:first-of-type h1 {
+  font-size: 5em;
+  width: 100%;
+  padding: 0;
+  margin: 0;
   align-self: flex-end;
+  transform: rotate(15deg);
+}
+
+.landing-page .down {
+  align-self: flex-end;
+  margin-bottom: -2em;
 }
 
 .landing-page.about {
@@ -535,6 +551,15 @@ footer p {
 
   .landing-page.about section {
     width: 100%;
+  }
+
+  .landing-page:first-of-type {
+    min-height: 20em;
+  }
+
+  .landing-page:first-of-type h1 {
+    font-size: 3em;
+    transform: rotate(15deg);
   }
 
   body {
