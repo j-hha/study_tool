@@ -532,16 +532,21 @@ footer p {
   }
 
   body {
-    font-size: .7em;
+    font-size: .9em;
   }
 
   .form {
     width: 90%;
   }
 
+  .form input[type="submit"] {
+    width: 100%;
+  }
+
   .topics-index {
     width: 100%;
   }
+
   .flash-card {
     width: 90%;
   }
