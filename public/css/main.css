@@ -382,14 +382,7 @@ aside h2 {
   font-size: 1.8em;
   padding: .3em 3%;
   margin: .3em 0;
-}
-
-.quiz-answer:nth-of-type(odd) {
   background-color: #fff;
-}
-
-.quiz-answer:nth-of-type(even) {
-  background-color: #f8f8f8;
 }
 
 .form {
