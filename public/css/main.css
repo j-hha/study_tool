@@ -307,9 +307,17 @@ aside h2 {
 .topics th {
   font-size: 1.8em;
   padding: .5em 5%;
-  background-color: #6cdea0;
   color: #fff;
   width: 50%;
+}
+
+
+#header-row-one {
+  background-color: #56b180;
+}
+
+#header-row-two {
+  background-color: #89e4b3;
 }
 
 .topics tr:nth-of-type(even) {
