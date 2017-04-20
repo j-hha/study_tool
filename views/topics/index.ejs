@@ -17,14 +17,22 @@
       <section class="topics">
         <h2>Your topics</h2>
         <% if (userTopics.length > 0) { %>
+          <table>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+            </tr>
             <% for (var i = 0; i < userTopics.length; i++) { %>
-              <section class="topics-index user-topics">
-                <a href="/topics/<%= userTopics[i].id; %>">
-                  <h4><%= userTopics[i].title; %></h4>
+              <tr>
+                <td>
+                  <a href="/topics/<%= userTopics[i].id; %>">
+                  <%= userTopics[i].title; %>
                 </a>
-                <p><%= userTopics[i].description; %></p>
-              </section>
+                </td>
+                <td><%= userTopics[i].description; %></td>
+              </tr>
             <% } %>
+          </table>
         <% } else { %>
           <h3>Nothing to see, yet. Click 'add a topic' above to start working on your first set of flash cards.</h3>
         <% } %>
@@ -33,14 +41,22 @@
       <section class="topics">
         <h2>See what other people are studying</h2>
         <% if (otherTopics.length > 0) { %>
-          <% for (var i = 0; i < Math.min(9, otherTopics.length); i++) { %>
-              <section class="topics-index other-topics">
-                    <a href="/topics/<%= otherTopics[i].id; %>">
-                      <h4><%= otherTopics[i].title; %></h4>
-                    </a>
-                  <p><%= otherTopics[i].description; %></p>
-              </section>
-          <% } %>
+          <table>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+            </tr>
+            <% for (var i = 0; i < Math.min(9, otherTopics.length); i++) { %>
+              <tr>
+                <td>
+                  <a href="/topics/<%= otherTopics[i].id; %>">
+                  <%= otherTopics[i].title; %>
+                </a>
+                </td>
+                <td><%= otherTopics[i].description; %></td>
+              </tr>
+            <% } %>
+          </table>
         <% } else { %>
           <h3>Nothing to see, yet. Share a link to this site with a friend and start cramming together.</h3>
         <% } %>

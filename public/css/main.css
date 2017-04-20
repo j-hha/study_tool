@@ -2,6 +2,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /*border: 1px dotted #000;*/
 }
 
 ul {
@@ -27,13 +28,16 @@ header {
    z-index: 1;
 }
 
-header a {
+a {
   color: #000;
-  text-decoration: none;
 }
 
-header a:hover {
+a:hover {
   color: #6cdea0;
+}
+
+header a {
+  text-decoration: none;
 }
 
 header nav {
@@ -266,10 +270,7 @@ aside h2 {
 
 .topics {
   padding: 1em 3%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+  margin: auto;
   margin-bottom: 1em;
 }
 
@@ -283,9 +284,10 @@ aside h2 {
   font-size: 1.5em;
   width: 50%;
   align-self: stretch;
-  margin-left: 25%;
+  margin: auto;
   font-style: italic;
   color: #808080;
+  padding-top: 1em;
 }
 
 .topics:first-of-type {
@@ -294,6 +296,37 @@ aside h2 {
   background: -o-linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1));
   background: -moz-linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1));
   background: linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1));
+}
+
+.topics table {
+  width: 75%;
+  margin: auto;
+  padding-top: 1em;
+}
+
+.topics th {
+  font-size: 1.8em;
+  padding: .5em 5%;
+  background-color: #6cdea0;
+  color: #fff;
+  width: 50%;
+}
+
+.topics tr:nth-of-type(even) {
+  background-color: #efefef;
+}
+
+.topics tr:nth-of-type(odd) {
+  background-color: #fff;
+}
+
+.topics td {
+  font-size: 1.4em;
+  padding: .5em 5%;
+}
+
+.topics td:nth-of-type(even) {
+  color: #808080;
 }
 
 .topics-index {
@@ -603,6 +636,13 @@ footer a:hover {
 
   .flash-card {
     width: 90%;
+  }
+
+  .topics th {
+    font-size: 1.4em;
+  }
+  .topics td {
+    font-size: 1.2em;
   }
 
   #final-score {
