@@ -59,16 +59,21 @@ router.get('/:id/revise', permissions.loggedIn, function (req, res) {
 //GET topics edit page
 router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   Topic.findById(req.params.id, function (err, foundTopic) {
-    User.findById(req.session.currentUserId, function(err, foundUser){
-      if (foundTopic.creator === foundUser.id) {
-        res.render('topics/edit.ejs', {
-          topic: foundTopic,
-          user: foundUser
-        });
-      } else {
-        res.status(403).send('403 Forbidden');
-      }
-    });
+    if (!err) {
+      User.findById(req.session.currentUserId, function(err, foundUser){
+        if (foundTopic.creator === foundUser.id) {
+          res.render('topics/edit.ejs', {
+            topic: foundTopic,
+            user: foundUser
+          });
+        } else {
+          res.status(403).send('403 Forbidden');
+        }
+      });
+    } else {
+      console.log(err);
+      res.status(404).send('404 Not Found');
+    }
   });
 });
 
