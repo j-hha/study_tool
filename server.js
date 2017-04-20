@@ -24,7 +24,7 @@ app.use(session({
   secret: 'just for testing purposes',
   resave: false,
   saveUninitialized: false
-}))
+}));
 
 // ------------------- set up usersController -------------------
 var usersController = require('./controllers/users.js');

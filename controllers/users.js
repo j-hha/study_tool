@@ -21,16 +21,16 @@ router.get('/new/success',  function (req, res) {
     success: true,
     origin: 'new user',
     user: undefined
-  })
+  });
 });
 
-// GET create success page
+// GET create fail page
 router.get('/new/fail',  function (req, res) {
   res.render('status.ejs', {
     success: false,
     origin: 'new user',
     user: undefined
-  })
+  });
 });
 
 // GET sign-up page
@@ -68,7 +68,7 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
         user: foundUser
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -83,7 +83,7 @@ router.get('/:id/edit/success', permissions.loggedIn,  function (req, res) {
         user: foundUser
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -109,7 +109,7 @@ router.get('/:id/edit/password/success', permissions.loggedIn, function (req, re
         user: foundUser
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -124,7 +124,7 @@ router.get('/:id/edit/password/fail', permissions.loggedIn,  function (req, res)
         user: foundUser
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -162,52 +162,64 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
         }
       });
     } else {
-      res.send('DENIED!');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
 
 // update password
 router.put('/:id/password', permissions.loggedIn, function (req, res) {
-  if (req.body.password.length >= 8 && req.body.password === req.body.passwordConfirm) {
-    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-    User.findByIdAndUpdate(req.params.id,
-      {
-        password: req.body.password
-      }, { runValidators: true }, function (err, updatedUser) {
-        console.log(err);
-        console.log(updatedUser);
-      res.redirect('/users/' + req.params.id + '/edit/password/success');
-    });
-  } else {
-    res.redirect('/users/' + req.params.id + '/edit/password/fail');
-  }
+  User.findById(req.params.id, function(err, foundUser) {
+    if (foundUser.id === req.session.currentUserId) {
+      if (req.body.password.length >= 8 && req.body.password === req.body.passwordConfirm) {
+        req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+        User.findByIdAndUpdate(req.params.id,
+          {
+            password: req.body.password
+          }, { runValidators: true }, function (err, updatedUser) {
+            console.log(err);
+            console.log(updatedUser);
+          res.redirect('/users/' + req.params.id + '/edit/password/success');
+        });
+      } else {
+        res.redirect('/users/' + req.params.id + '/edit/password/fail');
+      }
+    } else {
+      res.status(403).send('403 Forbidden');
+    }
+  });
 });
 
 // ------------------- DELETE route -------------------
 // delete user as well as user's topics and flash cards
 router.delete('/:id', permissions.loggedIn, function (req, res) {
-  User.findByIdAndRemove(req.params.id, function (err, deletedUser) {
-    console.log(err);
-    console.log(deletedUser);
-    for (var i = 0; i < deletedUser.topics.length; i++) {
-      Topic.findByIdAndRemove(deletedUser.topics[i], function(err, deletedTopic) {
+  User.findById(req.params.id, function (err, foundUser) {
+    if (foundUser.id === req.session.currentUserId) {
+      User.findByIdAndRemove(req.params.id, function (err, deletedUser) {
         console.log(err);
-        console.log(deletedTopic);
-        for (var j = 0; j < deletedTopic.flashcards.length; j++) {
-          Data.findByIdAndRemove(deletedTopic.flashcards[j], function (err, deletedFlashcard) {
-            console.log('topic and flashcard delete' + err);
-            console.log('topic and flashcard delete' + deletedFlashcard);
+        console.log(deletedUser);
+        for (var i = 0; i < deletedUser.topics.length; i++) {
+          Topic.findByIdAndRemove(deletedUser.topics[i], function(err, deletedTopic) {
+            console.log(err);
+            console.log(deletedTopic);
+            for (var j = 0; j < deletedTopic.flashcards.length; j++) {
+              Data.findByIdAndRemove(deletedTopic.flashcards[j], function (err, deletedFlashcard) {
+                console.log('topic and flashcard delete' + err);
+                console.log('topic and flashcard delete' + deletedFlashcard);
+              });
+            }
           });
         }
-      });
-    }
-    if (!err) {
-      req.session.destroy(function () {
-        res.redirect('/users/delete/success');
+        if (!err) {
+          req.session.destroy(function () {
+            res.redirect('/users/delete/success');
+          });
+        } else {
+          res.redirect('/users/' + req.params.id + 'delete/fail');
+        }
       });
     } else {
-      res.redirect('/users/' + req.params.id + 'delete/fail');
+      res.status(403).send('403 Forbidden');
     }
   });
 });

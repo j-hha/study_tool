@@ -66,14 +66,13 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
           user: foundUser
         });
       } else {
-        res.send('DENIED');
+        res.status(403).send('403 Forbidden');
       }
     });
   });
 });
 
-//GET JASON
-
+//GET for ajax request
 router.get('/:id/cards', permissions.loggedIn, function (req, res) {
   Data.find({topic: req.params.id}, function (err, foundCards) {
     res.send(foundCards);
@@ -117,25 +116,37 @@ router.post('/', permissions.loggedIn, function (req, res) {
 
 // ------------------- PUT route -------------------
 router.put('/:id', permissions.loggedIn, function (req, res) {
-  Topic.findByIdAndUpdate(req.params.id, req.body, {'new': true}, function (err, updatedTopic) {
-    res.redirect('/topics/' + req.params.id);
+  Topic.findById(req.params.id, function (err, foundTopic) {
+    if (foundTopic.creator === req.session.currentUserId) {
+      Topic.findByIdAndUpdate(req.params.id, req.body, {'new': true}, function (err, updatedTopic) {
+        res.redirect('/topics/' + req.params.id);
+      });
+    } else {
+      res.status(403).send('403 Forbidden');
+    }
   });
 });
 
 // ------------------- DELETE route -------------------
 router.delete('/:id', permissions.loggedIn, function (req, res) {
-  Topic.findByIdAndRemove(req.params.id, function (err, deletedTopic) {
-    for (var i = 0; i < deletedTopic.flashcards.length; i++) {
-      Data.findByIdAndRemove(deletedTopic.flashcards[i], function (err, deletedFlashcard) {
-        console.log('topic and flashcard delete' + err);
-        console.log('topic and flashcard delete' + deletedFlashcard);
+  Topic.findById(req.params.id, function (err, foundTopic) {
+    if (foundTopic.creator === req.session.currentUserId) {
+      Topic.findByIdAndRemove(req.params.id, function (err, deletedTopic) {
+        for (var i = 0; i < deletedTopic.flashcards.length; i++) {
+          Data.findByIdAndRemove(deletedTopic.flashcards[i], function (err, deletedFlashcard) {
+            console.log('topic and flashcard delete' + err);
+            console.log('topic and flashcard delete' + deletedFlashcard);
+          });
+        }
+        User.findByIdAndUpdate(deletedTopic.creator, { $pull: {topics: deletedTopic._id } }, {'new': true}, function(err, udpatedUser) {
+          console.log('topic delete'+ err);
+          console.log('topic delete' + udpatedUser);
+          res.redirect('/');
+        });
       });
+    } else {
+      res.status(403).send('403 Forbidden');
     }
-    User.findByIdAndUpdate(deletedTopic.creator, { $pull: {topics: deletedTopic._id } }, {'new': true}, function(err, udpatedUser) {
-      console.log('topic delete'+ err);
-      console.log('topic delete' + udpatedUser);
-      res.redirect('/');
-    });
   });
 });
 

@@ -19,7 +19,7 @@ router.get('/new/:topicId', permissions.loggedIn, function (req, res) {
         user: req.session.currentUserId,
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -34,7 +34,7 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
         user: req.session.currentUserId
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -57,7 +57,7 @@ router.post('/:topicId', permissions.loggedIn, function (req, res) {
         });
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -66,14 +66,14 @@ router.post('/:topicId', permissions.loggedIn, function (req, res) {
 // ------------------- PUT route -------------------
 router.put('/:id', permissions.loggedIn, function (req, res) {
   Data.findById(req.params.id, function (err, foundCard) {
-    if (data.author === req.session.currentUserId) {
+    if (foundCard.author === req.session.currentUserId) {
       Data.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, updatedCard) {
         Topic.findById(updatedCard.topic, function (err, foundTopic) {
           res.redirect('/topics/' + updatedCard.topic);
         });
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
   });
 });
@@ -82,7 +82,7 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
 
 router.delete('/:id', permissions.loggedIn, function (req, res) {
   Data.findById(req.params.id, function (err, foundCard) {
-    if (data.author === req.session.currentUserId) {
+    if (foundCard.author === req.session.currentUserId) {
       Data.findByIdAndRemove(req.params.id, function (err, deletedCard) {
         Topic.findByIdAndUpdate(deletedCard.topic,
           { $pull: {flashcards: deletedCard._id} }, {'new': true}, function (err, updatedTopic) {
@@ -93,7 +93,7 @@ router.delete('/:id', permissions.loggedIn, function (req, res) {
         });
       });
     } else {
-      res.send('DENIED');
+      res.status(403).send('403 Forbidden');
     }
     });
 });

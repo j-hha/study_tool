@@ -33,7 +33,7 @@
       <section class="topics">
         <h2>See what other people are studying</h2>
         <% if (otherTopics.length > 0) { %>
-          <% for (var i = 0; i < otherTopics.length; i++) { %>
+          <% for (var i = 0; i < Math.min(9, otherTopics.length); i++) { %>
               <section class="topics-index other-topics">
                     <a href="/topics/<%= otherTopics[i].id; %>">
                       <h4><%= otherTopics[i].title; %></h4>

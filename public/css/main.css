@@ -76,7 +76,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 main {
-  margin-top: 3.4em;
+  margin: 3.4em 0;
 }
 
 .landing-page {
@@ -86,7 +86,7 @@ main {
   align-items: center;
   flex-flow: row wrap;
   text-align: center;
-  min-height: 30em;
+  min-height: 30.5em;
 }
 
 .landing-page:first-of-type {
@@ -528,6 +528,13 @@ aside h2 {
 .form input.delete-btn:hover {
   background-color: #FF0000;
   color: #fff;
+}
+
+.status-messages {
+  text-align: center;
+  padding: 1em 5%;
+  font-size: 1.5em;
+  margin: 1em 5%;
 }
 
 footer {
