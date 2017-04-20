@@ -646,6 +646,10 @@ footer a:hover {
     width: 90%;
   }
 
+  .topics table {
+    width: 100%;
+  }
+
   .topics th {
     font-size: 1.4em;
   }
