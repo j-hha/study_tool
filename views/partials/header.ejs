@@ -1,6 +1,6 @@
 <a href="/"><h1>Crammer</h1></a>
 <nav>
-  <% if (user !== undefined) { %>
+  <% if (user) { %>
   <a href="/users/<%=user._id%>/edit">edit profile</a>
   <form action="/sessions?_method=DELETE" method="POST">
     <input type="submit" value="log out">

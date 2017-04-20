@@ -14,7 +14,7 @@ var bcrypt = require('bcrypt');
 // ------------------- GET route --> log in page -------------------
 router.get('/new', function(req, res){
   res.render('sessions/new.ejs', {
-    user: undefined
+    user: req.session.currentUserId
   });
 });
 
@@ -22,7 +22,7 @@ router.get('/new/fail', function(req, res){
   res.render('status.ejs', {
     success: false,
     origin: 'log in user',
-    user: undefined
+    user: req.session.currentUserId
   });
 });
 

@@ -20,7 +20,7 @@ router.get('/new/success',  function (req, res) {
   res.render('status.ejs', {
     success: true,
     origin: 'new user',
-    user: undefined
+    user: req.session.currentUserId
   });
 });
 
@@ -29,14 +29,14 @@ router.get('/new/fail',  function (req, res) {
   res.render('status.ejs', {
     success: false,
     origin: 'new user',
-    user: undefined
+    user: req.session.currentUserId
   });
 });
 
 // GET sign-up page
 router.get('/new', permissions.unknownUser, function (req, res) {
     res.render('users/new.ejs', {
-      user: undefined
+      user: req.session.currentUserId
     });
 });
 
@@ -45,7 +45,7 @@ router.get('/delete/success', function (req, res) {
   res.render('status.ejs', {
     success: true,
     origin: 'delete profile',
-    user: undefined
+    user: req.session.currentUserId
   });
 });
 
@@ -63,12 +63,16 @@ router.get('/:id/delete/fail', permissions.loggedIn,  function (req, res) {
 // GET edit page
 router.get('/:id/edit', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    if (foundUser.id === req.session.currentUserId) {
-      res.render('users/edit.ejs', {
-        user: foundUser
-      });
+    if (!err) {
+      if (foundUser.id === req.session.currentUserId) {
+        res.render('users/edit.ejs', {
+          user: foundUser
+        });
+      } else {
+        res.status(403).send('403 Forbidden');
+      }
     } else {
-      res.status(403).send('403 Forbidden');
+      res.status(404).send('404 Not Found');
     }
   });
 });
@@ -76,15 +80,11 @@ router.get('/:id/edit', permissions.loggedIn, function (req, res) {
 // GET  edit success page
 router.get('/:id/edit/success', permissions.loggedIn,  function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    if (foundUser.id === req.session.currentUserId) {
       res.render('status.ejs', {
         success: true,
         origin: 'update user',
         user: foundUser
-      });
-    } else {
-      res.status(403).send('403 Forbidden');
-    }
+    });
   });
 });
 
@@ -102,30 +102,22 @@ router.get('/:id/edit/fail', permissions.loggedIn,  function (req, res) {
 // GET edit password success page
 router.get('/:id/edit/password/success', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    if (foundUser.id === req.session.currentUserId) {
-      res.render('status.ejs', {
-        success: true,
-        origin: 'update password',
-        user: foundUser
-      });
-    } else {
-      res.status(403).send('403 Forbidden');
-    }
+    res.render('status.ejs', {
+      success: true,
+      origin: 'update password',
+      user: foundUser
+    });
   });
 });
 
 // GET edit password fail page
 router.get('/:id/edit/password/fail', permissions.loggedIn,  function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    if (foundUser.id === req.session.currentUserId) {
-      res.render('status.ejs', {
-        success: false,
-        origin: 'update password',
-        user: foundUser
-      });
-    } else {
-      res.status(403).send('403 Forbidden');
-    }
+    res.render('status.ejs', {
+      success: false,
+      origin: 'update password',
+      user: foundUser
+    });
   });
 });
 
@@ -153,16 +145,20 @@ router.post('/', permissions.unknownUser, function (req, res) {
 // update user information
 router.put('/:id', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function (err, foundUser) {
-    if (foundUser.id === req.session.currentUserId) {
-      User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }, function (err, updatedUser) {
-        if (err) {
-          res.redirect('/users/' + req.params.id + '/edit/fail');
-        } else {
-          res.redirect('/users/' + req.params.id + '/edit/success');
-        }
-      });
+    if (!err) {
+      if (foundUser.id === req.session.currentUserId) {
+        User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }, function (err, updatedUser) {
+          if (err) {
+            res.redirect('/users/' + req.params.id + '/edit/fail');
+          } else {
+            res.redirect('/users/' + req.params.id + '/edit/success');
+          }
+        });
+      } else {
+        res.status(403).send('403 Forbidden');
+      }
     } else {
-      res.status(403).send('403 Forbidden');
+      res.status(404).send('404 Not Found');
     }
   });
 });
@@ -170,22 +166,26 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
 // update password
 router.put('/:id/password', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    if (foundUser.id === req.session.currentUserId) {
-      if (req.body.password.length >= 8 && req.body.password === req.body.passwordConfirm) {
-        req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-        User.findByIdAndUpdate(req.params.id,
-          {
-            password: req.body.password
-          }, { runValidators: true }, function (err, updatedUser) {
-            console.log(err);
-            console.log(updatedUser);
-          res.redirect('/users/' + req.params.id + '/edit/password/success');
-        });
+    if (!err) {
+      if (foundUser.id === req.session.currentUserId) {
+        if (req.body.password.length >= 8 && req.body.password === req.body.passwordConfirm) {
+          req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+          User.findByIdAndUpdate(req.params.id,
+            {
+              password: req.body.password
+            }, { runValidators: true }, function (err, updatedUser) {
+              console.log(err);
+              console.log(updatedUser);
+            res.redirect('/users/' + req.params.id + '/edit/password/success');
+          });
+        } else {
+          res.redirect('/users/' + req.params.id + '/edit/password/fail');
+        }
       } else {
-        res.redirect('/users/' + req.params.id + '/edit/password/fail');
+        res.status(403).send('403 Forbidden');
       }
     } else {
-      res.status(403).send('403 Forbidden');
+      res.status(404).send('404 Not Found');
     }
   });
 });
@@ -194,32 +194,36 @@ router.put('/:id/password', permissions.loggedIn, function (req, res) {
 // delete user as well as user's topics and flash cards
 router.delete('/:id', permissions.loggedIn, function (req, res) {
   User.findById(req.params.id, function (err, foundUser) {
-    if (foundUser.id === req.session.currentUserId) {
-      User.findByIdAndRemove(req.params.id, function (err, deletedUser) {
-        console.log(err);
-        console.log(deletedUser);
-        for (var i = 0; i < deletedUser.topics.length; i++) {
-          Topic.findByIdAndRemove(deletedUser.topics[i], function(err, deletedTopic) {
-            console.log(err);
-            console.log(deletedTopic);
-            for (var j = 0; j < deletedTopic.flashcards.length; j++) {
-              Data.findByIdAndRemove(deletedTopic.flashcards[j], function (err, deletedFlashcard) {
-                console.log('topic and flashcard delete' + err);
-                console.log('topic and flashcard delete' + deletedFlashcard);
-              });
-            }
-          });
-        }
-        if (!err) {
-          req.session.destroy(function () {
-            res.redirect('/users/delete/success');
-          });
-        } else {
-          res.redirect('/users/' + req.params.id + 'delete/fail');
-        }
-      });
+    if (!err) {
+      if (foundUser.id === req.session.currentUserId) {
+        User.findByIdAndRemove(req.params.id, function (err, deletedUser) {
+          console.log(err);
+          console.log(deletedUser);
+          for (var i = 0; i < deletedUser.topics.length; i++) {
+            Topic.findByIdAndRemove(deletedUser.topics[i], function(err, deletedTopic) {
+              console.log(err);
+              console.log(deletedTopic);
+              for (var j = 0; j < deletedTopic.flashcards.length; j++) {
+                Data.findByIdAndRemove(deletedTopic.flashcards[j], function (err, deletedFlashcard) {
+                  console.log('topic and flashcard delete' + err);
+                  console.log('topic and flashcard delete' + deletedFlashcard);
+                });
+              }
+            });
+          }
+          if (!err) {
+            req.session.destroy(function () {
+              res.redirect('/users/delete/success');
+            });
+          } else {
+            res.redirect('/users/' + req.params.id + 'delete/fail');
+          }
+        });
+      } else {
+        res.status(403).send('403 Forbidden');
+      }
     } else {
-      res.status(403).send('403 Forbidden');
+      res.status(404).send('404 Not Found');
     }
   });
 });
