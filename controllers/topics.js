@@ -16,22 +16,33 @@ var permissions = require('../middleware/permissions.js');
 //GET topics index page
 router.get('/', permissions.loggedIn, function (req, res) {
   Topic.find({}, function (err, allTopics) {
-    User.findById(req.session.currentUserId, function (err, foundUser) {
-      var userTopics = [],
-          otherTopics = [];
+    if (!err) {
+      var intactTopicEntries = [];
       for (var i = 0; i < allTopics.length; i++) {
-        if (allTopics[i].creator === foundUser.id) {
-          userTopics.push(allTopics[i]);
-        } else {
-          otherTopics.push(allTopics[i]);
+        // DOUBLE CHECK AND TEST THIS!!!
+        if (allTopics[i] !== null || allTopics[i] !== undefined) {
+          intactTopicEntries.push(allTopics[i]);
         }
       }
-      res.render('topics/index.ejs', {
-        userTopics: userTopics,
-        otherTopics: otherTopics,
-        user: foundUser
+      User.findById(req.session.currentUserId, function (err, foundUser) {
+        var userTopics = [],
+            otherTopics = [];
+        for (var i = 0; i < intactTopicEntries.length; i++) {
+          if (allTopics[i].creator === foundUser.id) {
+            userTopics.push(intactTopicEntries[i]);
+          } else {
+            otherTopics.push(intactTopicEntries[i]);
+          }
+        }
+        res.render('topics/index.ejs', {
+          userTopics: userTopics,
+          otherTopics: otherTopics,
+          user: foundUser
+        });
       });
-    });
+    } else {
+      res.status(404).send('404 Not Found');
+    }
   });
 });
 
@@ -122,12 +133,16 @@ router.post('/', permissions.loggedIn, function (req, res) {
 // ------------------- PUT route -------------------
 router.put('/:id', permissions.loggedIn, function (req, res) {
   Topic.findById(req.params.id, function (err, foundTopic) {
-    if (foundTopic.creator === req.session.currentUserId) {
-      Topic.findByIdAndUpdate(req.params.id, req.body, {'new': true}, function (err, updatedTopic) {
-        res.redirect('/topics/' + req.params.id);
-      });
+    if (!err) {
+      if (foundTopic.creator === req.session.currentUserId) {
+        Topic.findByIdAndUpdate(req.params.id, req.body, {'new': true}, function (err, updatedTopic) {
+          res.redirect('/topics/' + req.params.id);
+        });
+      } else {
+        res.status(403).send('403 Forbidden');
+      }
     } else {
-      res.status(403).send('403 Forbidden');
+      res.status(404).send('404 Not Found');
     }
   });
 });
@@ -135,22 +150,26 @@ router.put('/:id', permissions.loggedIn, function (req, res) {
 // ------------------- DELETE route -------------------
 router.delete('/:id', permissions.loggedIn, function (req, res) {
   Topic.findById(req.params.id, function (err, foundTopic) {
-    if (foundTopic.creator === req.session.currentUserId) {
-      Topic.findByIdAndRemove(req.params.id, function (err, deletedTopic) {
-        for (var i = 0; i < deletedTopic.flashcards.length; i++) {
-          Data.findByIdAndRemove(deletedTopic.flashcards[i], function (err, deletedFlashcard) {
-            console.log('topic and flashcard delete' + err);
-            console.log('topic and flashcard delete' + deletedFlashcard);
+    if (!err) {
+      if (foundTopic.creator === req.session.currentUserId) {
+        Topic.findByIdAndRemove(req.params.id, function (err, deletedTopic) {
+          for (var i = 0; i < deletedTopic.flashcards.length; i++) {
+            Data.findByIdAndRemove(deletedTopic.flashcards[i], function (err, deletedFlashcard) {
+              console.log('topic and flashcard delete' + err);
+              console.log('topic and flashcard delete' + deletedFlashcard);
+            });
+          }
+          User.findByIdAndUpdate(deletedTopic.creator, { $pull: {topics: deletedTopic._id } }, {'new': true}, function(err, udpatedUser) {
+            console.log('topic delete'+ err);
+            console.log('topic delete' + udpatedUser);
+            res.redirect('/');
           });
-        }
-        User.findByIdAndUpdate(deletedTopic.creator, { $pull: {topics: deletedTopic._id } }, {'new': true}, function(err, udpatedUser) {
-          console.log('topic delete'+ err);
-          console.log('topic delete' + udpatedUser);
-          res.redirect('/');
         });
-      });
+      } else {
+        res.status(403).send('403 Forbidden');
+      }
     } else {
-      res.status(403).send('403 Forbidden');
+      res.status(404).send('404 Not Found');
     }
   });
 });
