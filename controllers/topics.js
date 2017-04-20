@@ -98,16 +98,19 @@ router.get('/:id/cards', permissions.loggedIn, function (req, res) {
 //GET topics show page
 router.get('/:id', permissions.loggedIn, function (req, res) {
   Topic.findById(req.params.id, function (err, foundTopic) {
-    console.log(err);
-    Data.find({topic: req.params.id}, function (err, foundCard) {
-      User.findById(req.session.currentUserId, function(err, foundUser){
-        res.render('topics/show.ejs', {
-          topic: foundTopic,
-          cards: foundCard,
-          user: foundUser
+    if (!err) {
+      Data.find({topic: req.params.id}, function (err, foundCard) {
+        User.findById(req.session.currentUserId, function(err, foundUser){
+          res.render('topics/show.ejs', {
+            topic: foundTopic,
+            cards: foundCard,
+            user: foundUser
+          });
         });
       });
-    });
+    } else {
+      res.status(404).send('404 Not Found');
+    }
   });
 });
 
